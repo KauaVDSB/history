@@ -1,0 +1,3781 @@
+/* ==========================================================================
+   Consumo e Endividamento: Duas Faces de uma Mesma Moeda?
+   Pitch Acadêmico Interativo (História + Educação Financeira - 8º Ano)
+   Fontes Oficiais Locais: EB Garamond (Títulos) e Inter (Textos de Apoio)
+   ========================================================================== */
+
+/* --- Importação das Fontes Locais (100% Offline) --- */
+@import url("fonts/fonts.css");
+
+/* --- Variáveis Globais e Paleta de Cores --- */
+:root {
+  /* Paleta Oficial Idêntica às Amostras da Imagem de Referência */
+  --bg-cream: #F7F3E9;
+  --bg-cream-dark: #ede7d8;
+  --color-green-dark: #173B34;
+  --color-green-deep: #0f2c25;
+  --color-green-card: #D5E8DC;
+  --color-mint: #D5E8DC;
+  --color-teal-dark: #0f7166;
+  --color-terracotta: #C66E4E;
+  --color-terracotta-dark: #8c5a36;
+  --color-yellow-highlight: #f0c65c;
+  --color-yellow-gold: #f4cd4e;
+  --color-kraft: #F2E4CE;
+  --color-white: #FFFDF7;
+  --color-text-main: #173B34;
+  --color-text-body: #2f4940;
+  --color-text-muted: #5e7269;
+  --color-notebook-line: rgba(180, 175, 160, 0.24);
+
+  /* Tipografia Fiel aos Slides Originais */
+  --font-serif: "EB Garamond", "Georgia", "Palatino Linotype", serif;
+  --font-sans: "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Dimensões Nominais do Palco 16:9 */
+  --stage-width: 1440px;
+  --stage-height: 810px;
+}
+
+/* --- Reset e Configurações Básicas --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #111715; /* Moldura escura tipo cinema/projetor */
+  color: var(--color-text-main);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- Viewport da Apresentação (Centralizador 16:9) --- */
+#presentation-viewport {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* --- Palco 16:9 (1440 × 810) --- */
+.stage {
+  width: var(--stage-width);
+  height: var(--stage-height);
+  flex-shrink: 0;
+  position: relative;
+  background-color: var(--bg-cream);
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.45);
+  transform-origin: center center;
+  user-select: none;
+  overflow: hidden;
+}
+
+/* Faixas verdes estruturais que atravessam as bordas superior e inferior */
+.stage-edge-bar {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  background-color: var(--color-green-dark);
+  z-index: 30;
+  pointer-events: none;
+}
+
+.stage-edge-top {
+  top: 0;
+  height: 14px;
+}
+
+.stage-edge-bottom {
+  bottom: 0;
+  height: 11px;
+}
+
+/* Bloco verde sólido no topo direito (proporções fiéis ao original: 255 × 66) */
+.header-corner-block {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 255px;
+  height: 66px;
+  background-color: var(--color-green-dark);
+  z-index: 25;
+}
+
+/* --- Estrutura dos Slides com Fundo Opaco Garantido --- */
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  flex-direction: column;
+  padding: 38px 64px 26px 64px;
+  opacity: 0;
+  /* Fundo 100% opaco para que os slides inferiores não apareçam na revelação */
+  background-color: var(--bg-cream);
+  transition: opacity 0.28s ease-in-out;
+  overflow: hidden;
+}
+
+/* Pauta do caderno suave com margens laterais preservadas (espaçamento 41px) */
+.slide::before {
+  content: "";
+  position: absolute;
+  top: 36px;
+  bottom: 24px;
+  left: 60px;
+  right: 60px;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 40px,
+    var(--color-notebook-line) 40px,
+    var(--color-notebook-line) 41px
+  );
+  pointer-events: none;
+  z-index: 0; /* Garante que a pauta fique sempre atrás dos cartões e elementos */
+}
+
+#slide-1 { 
+  z-index: 5; 
+  padding: 0; /* Slide 1 tem layout rigorosamente calibrado */
+}
+#slide-2 { 
+  z-index: 6; 
+  padding: 0; /* Slide 2 tem layout calibrado para 1440x810 */
+}
+#slide-3 { z-index: 7; }
+#slide-4 { z-index: 8; }
+
+.slide.active {
+  display: flex;
+  opacity: 1;
+}
+
+/* --- Faixa Superior Comum (Header) --- */
+.slide-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 38px;
+  position: relative;
+  z-index: 10;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 20px;
+}
+
+.badge-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 14px;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.dark-badge {
+  background-color: var(--color-green-dark);
+  color: var(--color-white);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+.header-line {
+  height: 1.5px;
+  background-color: rgba(22, 60, 51, 0.25);
+  flex: 1;
+  max-width: 580px;
+}
+
+/* --- Rodapés dos Slides --- */
+.slide-footer {
+  width: 100%;
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 10px;
+  z-index: 5;
+}
+
+.footer-center-tag {
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+.slide2-footer,
+.slide3-footer {
+  justify-content: flex-start;
+}
+
+.footer-left-tag {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--color-text-main);
+  text-transform: uppercase;
+}
+
+
+/* ==========================================================================
+   GRUPO DA MOEDA: MOEDA 3D + SOMBRA SEPARADA INDEPENDENTE
+   Otimizado para Alta Performance (Apenas Transform e Opacity)
+   ========================================================================== */
+.coin-interactive-group {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 35;
+}
+
+/* Sombra Independente: Animada sem 'filter: drop-shadow' para máxima fluidez */
+.coin-shadow {
+  position: absolute;
+  top: 125px;
+  right: 50px;
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(15, 44, 37, 0.45) 0%, rgba(15, 44, 37, 0.18) 50%, rgba(15, 44, 37, 0) 72%);
+  transform: translate3d(0, 4px, 0) scale(1);
+  opacity: 0.45;
+  pointer-events: none;
+  z-index: 34;
+  will-change: transform, opacity;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
+}
+
+/* Botão Acessível da Moeda */
+.coin-button {
+  position: absolute;
+  top: 125px;
+  right: 50px;
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 35;
+  outline: none;
+  perspective: 1200px;
+  -webkit-perspective: 1200px;
+  transform-origin: center center;
+  transform: translate3d(0, 0, 0) scale(1);
+  will-change: transform, opacity;
+}
+
+/* Oculta a moeda e sombra em outros slides quando não estão animando */
+body:not(.on-slide-1) .coin-interactive-group:not(.is-animating) {
+  display: none !important;
+}
+
+/* Container 3D interno da Moeda */
+.coin-3d-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  will-change: transform;
+}
+
+/* Faces Frontal e Traseira */
+.coin-face {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.coin-face-front {
+  transform: translateZ(2.5px);
+  -webkit-transform: translateZ(2.5px);
+}
+
+.coin-face-back {
+  transform: rotateY(180deg) translateZ(2.5px);
+  -webkit-transform: rotateY(180deg) translateZ(2.5px);
+}
+
+/* Anéis Cilíndricos de Espessura 3D */
+.coin-edge-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #b3d7c3;
+  border: 2px solid var(--color-green-dark);
+  pointer-events: none;
+}
+
+.edge-1 { transform: translateZ(1.5px); }
+.edge-2 { transform: translateZ(0px); }
+.edge-3 { transform: translateZ(-1.5px); }
+.edge-base { transform: translateZ(-2.5px); }
+
+.coin-disc-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Interações em Repouso da Moeda */
+.coin-button:hover:not(.animating) .coin-3d-wrapper {
+  transform: translateY(-2px) scale(1.05);
+}
+
+.coin-button:hover:not(.animating) + .coin-shadow {
+  transform: translate3d(0, 6px, 0) scale(1.1);
+  opacity: 0.55;
+}
+
+.coin-button:active:not(.animating) .coin-3d-wrapper {
+  transform: translateY(1px) scale(0.97);
+}
+
+.coin-button:focus-visible {
+  outline: 3px solid var(--color-yellow-gold);
+  outline-offset: 6px;
+  border-radius: 50%;
+}
+
+
+/* ==========================================================================
+   NOVA COREOGRAFIA DA MOEDA (1,9 SEGUNDO CONTÍNUA, R$ E AMPULHETA EQUILIBRADOS)
+   0 a 0.475s: Desprende em R$ (0°), gira pela borda (90°) e chega ao centro em Ampulheta (180°)
+   0.475 a 0.95s: Vira pela borda (270°) e desacelera suavemente em R$ (360°) no centro
+   0.95 a 1.425s: Vira pela borda (450°) e desacelera suavemente em Ampulheta (540°) no centro
+   1.425 a 1.9s: Vira pela borda (630°) de volta a R$ (720°) enquanto o Slide 2 se abre
+   ========================================================================== */
+.coin-interactive-group.is-animating .coin-button {
+  pointer-events: none;
+  animation: coinFlight2s 1.9s cubic-bezier(0.25, 1, 0.35, 1) forwards;
+}
+
+.coin-interactive-group.is-animating .coin-3d-wrapper {
+  animation: coinSpin2s 1.9s linear forwards;
+}
+
+.coin-interactive-group.is-animating .coin-shadow {
+  animation: coinShadowFlight2s 1.9s cubic-bezier(0.25, 1, 0.35, 1) forwards;
+}
+
+/* Trajetória de Voo Contínua (~1.9s): */
+@keyframes coinFlight2s {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+  25% {
+    /* 0.475s: Chega ao centro do palco com ~280px de diâmetro */
+    transform: translate3d(-618px, 228px, 0) scale(2.692);
+    opacity: 1;
+  }
+  50% {
+    /* 0.95s: Face R$ (360°) em destaque central */
+    transform: translate3d(-618px, 228px, 0) scale(2.692);
+    opacity: 1;
+  }
+  75% {
+    /* 1.425s: Face Ampulheta (540°) em destaque central enquanto a revelação circular abre */
+    transform: translate3d(-618px, 228px, 0) scale(2.692);
+    opacity: 1;
+  }
+  90% {
+    /* 1.71s: Retorno à face R$ com desvanecimento suave */
+    transform: translate3d(-618px, 228px, 0) scale(2.35);
+    opacity: 0.45;
+  }
+  100% {
+    /* 1.9s: Concluído */
+    transform: translate3d(-618px, 228px, 0) scale(1.85);
+    opacity: 0;
+  }
+}
+
+/* Giro 3D Contínuo e Simétrico entre R$ e Ampulheta (1.9s):
+   - Desaceleração idêntica (0.556x) quando qualquer uma das duas faces fica de frente (0°, 180°, 360°, 540°, 720°)
+   - Passagem rápida e contínua (1.467x) pelas bordas laterais (90°, 270°, 450°, 630°)
+   - Tempo de exposição visual 50% R$ (950ms) / 50% Ampulheta (950ms), sem pausas extras
+*/
+@keyframes coinSpin2s {
+  0% {
+    /* 0.000s: Face R$ (frente) */
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+    animation-timing-function: cubic-bezier(0.45, 0.25, 0.70, 0.56);
+  }
+  12.5% {
+    /* 0.238s: Borda 1 (90°) */
+    transform: rotateX(4deg) rotateY(90deg) rotateZ(-1.5deg);
+    animation-timing-function: cubic-bezier(0.30, 0.44, 0.55, 0.75);
+  }
+  25% {
+    /* 0.475s: Face Ampulheta #1 (180°) com desaceleração suave */
+    transform: rotateX(0deg) rotateY(180deg) rotateZ(0deg);
+    animation-timing-function: cubic-bezier(0.45, 0.25, 0.70, 0.56);
+  }
+  37.5% {
+    /* 0.713s: Borda 2 (270°) */
+    transform: rotateX(-4deg) rotateY(270deg) rotateZ(1.5deg);
+    animation-timing-function: cubic-bezier(0.30, 0.44, 0.55, 0.75);
+  }
+  50% {
+    /* 0.950s: Face R$ #2 (360°) com desaceleração suave idêntica no centro */
+    transform: rotateX(0deg) rotateY(360deg) rotateZ(0deg);
+    animation-timing-function: cubic-bezier(0.45, 0.25, 0.70, 0.56);
+  }
+  62.5% {
+    /* 1.188s: Borda 3 (450°) */
+    transform: rotateX(4deg) rotateY(450deg) rotateZ(-1.5deg);
+    animation-timing-function: cubic-bezier(0.30, 0.44, 0.55, 0.75);
+  }
+  75% {
+    /* 1.425s: Face Ampulheta #2 (540°) com desaceleração suave idêntica */
+    transform: rotateX(0deg) rotateY(540deg) rotateZ(0deg);
+    animation-timing-function: cubic-bezier(0.45, 0.25, 0.70, 0.56);
+  }
+  87.5% {
+    /* 1.663s: Borda 4 (630°) */
+    transform: rotateX(-3deg) rotateY(630deg) rotateZ(1deg);
+    animation-timing-function: cubic-bezier(0.30, 0.44, 0.55, 0.75);
+  }
+  100% {
+    /* 1.900s: Face R$ #3 (720°) finalizando o giro */
+    transform: rotateX(0deg) rotateY(720deg) rotateZ(0deg);
+  }
+}
+
+/* Sombra Separada em Transform & Opacity (1.9s) */
+@keyframes coinShadowFlight2s {
+  0% {
+    transform: translate3d(0, 4px, 0) scale(1);
+    opacity: 0.45;
+  }
+  26.3% {
+    /* 0.5s */
+    transform: translate3d(-618px, 252px, 0) scale(2.7);
+    opacity: 0.35;
+  }
+  55.3% {
+    /* 1.05s */
+    transform: translate3d(-618px, 252px, 0) scale(2.7);
+    opacity: 0.35;
+  }
+  73.7% {
+    /* 1.4s */
+    transform: translate3d(-618px, 252px, 0) scale(2.7);
+    opacity: 0.3;
+  }
+  89.5% {
+    /* 1.7s */
+    transform: translate3d(-618px, 252px, 0) scale(2.2);
+    opacity: 0.1;
+  }
+  100% {
+    /* 1.9s: Desaparece */
+    transform: translate3d(-618px, 252px, 0) scale(1.8);
+    opacity: 0;
+  }
+}
+
+/* Abertura Circular do Slide 2: Inicia fluidamente em 1.1s */
+#slide-2.revealing {
+  display: flex !important;
+  opacity: 1 !important;
+  z-index: 18;
+  clip-path: circle(0px at 50% 50%);
+  -webkit-clip-path: circle(0px at 50% 50%);
+  animation: irisRevealContinuous 0.78s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: 1.1s; /* Início imediato após a passagem em destaque por História */
+  will-change: clip-path;
+}
+
+@keyframes irisRevealContinuous {
+  0% {
+    clip-path: circle(0px at 50% 50%);
+    -webkit-clip-path: circle(0px at 50% 50%);
+  }
+  100% {
+    clip-path: circle(920px at 50% 50%);
+    -webkit-clip-path: circle(920px at 50% 50%);
+  }
+}
+
+
+/* ==========================================================================
+   TELA 1: ABERTURA / CAPA COM HIERARQUIA VISUAL DO ORIGINAL
+   ========================================================================== */
+.slide1-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-top: 18px;
+  position: relative;
+}
+
+/* Decorações da Capa */
+.slide1-decorations {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   TELA 1: CAPA / ABERTURA - LAYOUT CALIBRADO
+   ========================================================================== */
+
+/* Cabeçalho do Slide 1 */
+#slide-1 .slide-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 90px;
+  z-index: 15;
+  pointer-events: none;
+}
+
+#slide-1 .header-left {
+  position: absolute;
+  left: 79px; /* 5.5% de 1440px */
+  top: 52px;
+}
+
+#slide-1 .badge-tag.dark-badge {
+  background-color: var(--color-green-dark);
+  color: var(--color-white);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  line-height: 1;
+  padding: 6px 14px;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: inline-flex;
+  align-items: center;
+  text-transform: uppercase;
+}
+
+#slide-1 .header-line {
+  position: absolute;
+  left: 592px;
+  top: 64.5px;
+  width: 590px;
+  height: 1px;
+  background-color: #8da397;
+  transform: translateY(-50%);
+}
+
+/* Sinais Decorativos do Slide 1 */
+.slide1-decorations {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 6;
+}
+
+.cross-mark {
+  position: absolute;
+  font-family: var(--font-sans);
+  font-weight: 300;
+  line-height: 1;
+}
+
+.cross-1 {
+  left: 1242px;
+  top: 265px;
+  font-size: 18px;
+  color: var(--color-terracotta);
+  opacity: 0.85;
+}
+
+.dotted-guide-line {
+  position: absolute;
+  left: 1090px;
+  top: 356px;
+  width: 285px;
+  border-top: 1px dotted #a8b8b0;
+}
+
+.cross-2 {
+  left: 1378px;
+  top: 347px;
+  font-size: 18px;
+  color: #d09438;
+  opacity: 0.9;
+}
+
+/* Faixa Bege de Categoria */
+#slide-1 .tag-category {
+  position: absolute;
+  left: 79px;
+  top: 116px;
+  background-color: var(--color-kraft);
+  color: #6e4f35;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  line-height: 1;
+  padding: 5px 14px;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  text-transform: uppercase;
+}
+
+/* Bloco do Título da Capa */
+#slide-1 .title-block {
+  position: absolute;
+  left: 79px;
+  top: 176px;
+  width: 860px;
+  z-index: 10;
+}
+
+#slide-1 .main-title {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+#slide-1 .title-line-top {
+  font-family: var(--font-serif);
+  font-size: 52px;
+  font-weight: 600;
+  color: var(--color-green-dark);
+  line-height: 1;
+  margin-bottom: 28px;
+  display: block;
+}
+
+#slide-1 .highlight-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+#slide-1 .title-line-huge {
+  font-family: var(--font-serif);
+  font-size: 82px;
+  font-weight: 700;
+  color: var(--color-green-dark);
+  line-height: 1;
+  display: inline-block;
+  letter-spacing: -1px;
+}
+
+/* Marca-texto amarelo: mais curto que a palavra, termina antes dos dois-pontos.
+   Inicia com a faixa recolhida da esquerda para a direita; desenha em ~600ms no primeiro pointerenter. */
+#slide-1 .highlight-wrapper {
+  position: relative;
+  display: inline-block;
+  cursor: default;
+}
+
+#slide-1 .highlight-ink {
+  position: absolute;
+  left: 8px;
+  bottom: 10px;
+  width: 508px;
+  height: 34px;
+  background-color: #f0c65c;
+  border-radius: 2px;
+  transform: rotate(-0.6deg);
+  z-index: -1;
+  opacity: 0.88;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 600ms cubic-bezier(0.22, 0.85, 0.36, 1);
+  will-change: clip-path;
+}
+
+#slide-1 .highlight-wrapper.is-highlighted .highlight-ink,
+#slide-1 .highlight-ink.is-highlighted {
+  clip-path: inset(0 0% 0 0);
+}
+
+#slide-1 .title-line-bottom {
+  font-family: var(--font-serif);
+  font-size: 48px;
+  font-weight: 600;
+  color: var(--color-green-dark);
+  line-height: 1;
+  margin-top: 32px;
+  display: block;
+}
+
+/* Linha Terracota Fina */
+#slide-1 .terracotta-divider {
+  width: 245px;
+  height: 1.5px;
+  background-color: var(--color-terracotta);
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+
+#slide-1 .subtitle {
+  font-family: var(--font-sans);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--color-green-dark);
+  line-height: 1.3;
+  margin: 0;
+}
+
+/* Três Recortes de Papel da Base da Capa (Com margem de segurança para o rodapé e controles) */
+#slide-1 .cards-flow-row {
+  position: absolute;
+  left: 79px;
+  top: 510px;
+  width: 1282px;
+  height: 236px;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+  overflow: visible;
+}
+
+/* Base Comum dos Recortes de Papel da Capa */
+#slide-1 .paper-card {
+  cursor: pointer;
+  user-select: none;
+  transform-origin: center center;
+  transition: transform 0.24s cubic-bezier(0.2, 0.8, 0.4, 1),
+              box-shadow 0.24s ease,
+              z-index 0.24s step-start;
+  will-change: transform, box-shadow;
+  z-index: 2;
+  outline: none;
+}
+
+#slide-1 .paper-card:focus-visible {
+  outline: 2px solid var(--color-green-dark);
+  outline-offset: 3px;
+}
+
+#slide-1 .paper-card:hover,
+#slide-1 .paper-card.is-hovering {
+  z-index: 15;
+}
+
+/* Recorte 1: Kraft (Revolução Industrial) */
+#slide-1 .card-kraft {
+  width: 388px;
+  height: 232px;
+  background-color: var(--color-kraft);
+  border-radius: 2px;
+  transform: rotate(-0.5deg);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1), 2px 3px 0 #e4d4bc;
+  padding: 12px 18px 10px 18px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+#slide-1 .card-kraft:hover,
+#slide-1 .card-kraft.is-hovering {
+  transform: translateY(-5px) scale(1.025) rotate(-0.5deg);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15), 0 4px 10px rgba(0, 0, 0, 0.08), 2px 5px 0 #d9c8ae;
+}
+
+.card-kraft-top-bar {
+  height: 8px;
+  background-color: #8c5a36;
+  border-radius: 1px;
+  margin-bottom: 8px;
+}
+
+.card-meta,
+.card-epoch {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  line-height: 1.2;
+  color: #8c5a36;
+  text-transform: uppercase;
+}
+
+.card-divider-line {
+  width: 100%;
+  height: 1px;
+  background-color: rgba(141, 79, 43, 0.22);
+  margin-top: 6px;
+  margin-bottom: 8px;
+}
+
+.card-illustration {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-illustration.factory-ill {
+  position: relative;
+}
+
+.card-illustration.factory-ill svg {
+  overflow: visible;
+  width: 260px;
+  height: 105px;
+}
+
+/* Fumaça das Chaminés (Reação ao Hover - 800ms) */
+.smoke-line {
+  opacity: 0;
+  transform-origin: center bottom;
+  pointer-events: none;
+}
+
+#slide-1 .card-kraft.animating-smoke .smoke-line {
+  animation: smokeRise 0.8s ease-out forwards;
+}
+
+#slide-1 .card-kraft.animating-smoke .smoke-1 { animation-delay: 0s; }
+#slide-1 .card-kraft.animating-smoke .smoke-2 { animation-delay: 0.12s; }
+#slide-1 .card-kraft.animating-smoke .smoke-3 { animation-delay: 0.06s; }
+#slide-1 .card-kraft.animating-smoke .smoke-4 { animation-delay: 0.18s; }
+
+@keyframes smokeRise {
+  0% {
+    opacity: 0;
+    transform: translateY(4px) scale(0.7);
+  }
+  20% {
+    opacity: 0.8;
+  }
+  55% {
+    opacity: 0.55;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-16px) scale(1.15);
+  }
+}
+
+.card-footer-label {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.9px;
+  line-height: 1.2;
+  margin-top: 4px;
+  text-transform: uppercase;
+}
+
+.label-kraft-left {
+  color: #8c5a36;
+  text-align: left;
+  padding-left: 16px;
+}
+
+/* Recorte 2: Papel Jornal em Branco Envelhecido Bem Claro (Crise de 1929) */
+#slide-1 .card-white {
+  width: 394px;
+  height: 222px;
+  background-color: #fcfaf5;
+  border: 1px solid #dfd7c8;
+  border-radius: 2px;
+  transform: rotate(0.4deg);
+  box-shadow: -3px -2px 0 #ece5d8, -4px -3px 0 #dad1c2, 0 4px 14px rgba(0, 0, 0, 0.09), 3px 4px 0 #e3dbcd;
+  padding: 12px 18px 10px 18px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+#slide-1 .card-white:hover,
+#slide-1 .card-white.is-hovering {
+  transform: translateY(-5px) scale(1.025) rotate(0.4deg);
+  box-shadow: -3px -2px 0 #ece5d8, -4px -3px 0 #dad1c2, 0 12px 28px rgba(0, 0, 0, 0.15), 0 4px 10px rgba(0, 0, 0, 0.08), 3px 6px 0 #dcd3c4;
+}
+
+.paper-layer-back {
+  display: none;
+}
+
+#slide-1 .card-headline-serif {
+  font-family: var(--font-serif);
+  font-size: 23px;
+  font-weight: 700;
+  color: var(--color-green-dark);
+  text-align: left;
+  margin: 4px 0 4px 0;
+}
+
+.card-illustration.chart-ill .ill-svg {
+  width: 320px;
+  height: 86px;
+  overflow: visible;
+}
+
+/* Gráfico de 1929 Sendo Desenhado (Reação ao Hover - 900ms) */
+.chart-crash-line {
+  stroke-dasharray: 380;
+  stroke-dashoffset: 0;
+}
+
+#slide-1 .card-white.animating-chart .chart-crash-line {
+  animation: drawCrashLine 0.9s cubic-bezier(0.25, 0.9, 0.4, 1) forwards;
+}
+
+@keyframes drawCrashLine {
+  0% {
+    stroke-dashoffset: 380;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.label-center {
+  text-align: center;
+}
+
+.label-muted {
+  color: #4a5550;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.9px;
+}
+
+.text-terracotta {
+  color: var(--color-terracotta);
+}
+
+/* Recorte 3: Menta (Consumo Digital) */
+#slide-1 .card-mint {
+  width: 420px;
+  height: 232px;
+  background-color: var(--color-mint);
+  border-radius: 2px;
+  transform: rotate(-0.3deg);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1), 2px 3px 0 #bcd1c4;
+  padding: 12px 18px 10px 18px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+#slide-1 .card-mint:hover,
+#slide-1 .card-mint.is-hovering {
+  transform: translateY(-5px) scale(1.025) rotate(-0.3deg);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15), 0 4px 10px rgba(0, 0, 0, 0.08), 2px 5px 0 #afc6b8;
+}
+
+#slide-1 .card-mint .card-top-accent-bar {
+  height: 6px;
+  background-color: var(--color-green-dark);
+  border-radius: 1px;
+  margin-bottom: 8px;
+}
+
+.card-illustration.digital-ill .ill-svg {
+  width: 280px;
+  height: 110px;
+}
+
+/* Botão COMPRAR Acendendo (Reação ao Hover - 600ms) */
+.btn-comprar-bg {
+  transition: fill 0.2s ease, filter 0.2s ease;
+}
+
+#slide-1 .card-mint.animating-buy .btn-comprar-bg {
+  animation: buyBtnPulse 0.6s ease-in-out forwards;
+}
+
+@keyframes buyBtnPulse {
+  0% {
+    fill: #f5eedc;
+    filter: drop-shadow(0 0 0px rgba(240, 198, 92, 0));
+  }
+  50% {
+    fill: #f4cd4e;
+    filter: drop-shadow(0 0 6px rgba(244, 205, 78, 0.95)) drop-shadow(0 0 12px rgba(240, 198, 92, 0.6));
+  }
+  100% {
+    fill: #f5eedc;
+    filter: drop-shadow(0 0 0px rgba(240, 198, 92, 0));
+  }
+}
+
+#slide-1 .card-mint .card-footer-label {
+  margin-top: 2px;
+  margin-bottom: 6px;
+}
+
+.label-teal, .text-teal {
+  color: var(--color-green-dark);
+}
+
+/* Setas entre os Recortes (Sequência na Abertura da Capa - ~1s) */
+#slide-1 .flow-arrow {
+  margin: 0 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.arrow-path {
+  stroke-dasharray: 44;
+  stroke-dashoffset: 0;
+  opacity: 1;
+}
+
+#slide-1 .cards-flow-row.animating-arrows .arrow-path-1 {
+  animation: drawCoverArrow1 0.45s cubic-bezier(0.2, 0.8, 0.4, 1) forwards;
+}
+
+#slide-1 .cards-flow-row.animating-arrows .arrow-path-2 {
+  animation: drawCoverArrow2 0.50s cubic-bezier(0.2, 0.8, 0.4, 1) 0.45s forwards;
+}
+
+@keyframes drawCoverArrow1 {
+  0% {
+    stroke-dashoffset: 44;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes drawCoverArrow2 {
+  0% {
+    stroke-dashoffset: 44;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+/* Fita Adesiva nos Recortes (Transparência Natural e Pequenas Diferenças de Inclinação) */
+.tape-strip {
+  position: absolute;
+  top: -10px;
+  right: 36px;
+  width: 62px;
+  height: 19px;
+  background: linear-gradient(180deg, rgba(234, 225, 200, 0.64) 0%, rgba(225, 215, 188, 0.54) 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.55);
+  border-bottom: 1px solid rgba(182, 172, 146, 0.44);
+  border-left: 1px dashed rgba(186, 176, 150, 0.52);
+  border-right: 1px dashed rgba(186, 176, 150, 0.52);
+  transform: rotate(-1.8deg);
+  box-shadow: 0 2px 4px rgba(23, 59, 52, 0.08), 0 1px 2px rgba(0, 0, 0, 0.05);
+  border-radius: 1.5px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.tape-strip.tape-right {
+  right: 32px;
+  transform: rotate(2deg);
+}
+
+#slide-1 .card-kraft .tape-strip {
+  right: 38px;
+  width: 62px;
+  transform: rotate(-2.3deg);
+}
+
+#slide-1 .card-white .tape-strip {
+  right: 30px;
+  width: 60px;
+  transform: rotate(1.8deg);
+}
+
+#slide-1 .card-mint .tape-strip {
+  right: 35px;
+  width: 64px;
+  transform: rotate(-1.1deg);
+}
+
+/* Rodapé da Capa */
+#slide-1 .slide-footer {
+  position: absolute;
+  bottom: 15px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  z-index: 10;
+}
+
+#slide-1 .footer-center-tag {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  color: #555555;
+  letter-spacing: 1.2px;
+}
+
+
+/* ==========================================================================
+   TELA 2: ESTRUTURA DO PROJETO - LAYOUT CALIBRADO
+   ========================================================================== */
+
+#slide-2 .slide-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 90px;
+  z-index: 15;
+  pointer-events: none;
+}
+
+#slide-2 .header-left {
+  position: absolute;
+  left: 81px;
+  top: 52px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+#slide-2 .badge-tag.dark-badge {
+  background-color: var(--color-green-dark);
+  color: var(--color-white);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  padding: 5px 14px;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+#slide-2 .header-line {
+  position: static;
+  width: 870px;
+  max-width: none;
+  flex: none;
+  height: 1px;
+  background-color: #8da397;
+}
+
+.slide2-layout {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+/* Cabeçalho do Slide 2: Título, Número e Badge */
+.slide2-title-row {
+  position: absolute;
+  left: 82px;
+  top: 106px;
+  width: 1278px;
+  height: 100px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  z-index: 3;
+}
+
+.slide2-title-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.badge-number-kraft {
+  width: 70px;
+  height: 72px;
+  background-color: #f1e3cd;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-size: 42px;
+  font-weight: 700;
+  color: #865436;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transform: rotate(-2deg);
+  flex-shrink: 0;
+}
+
+.slide2-title-group {
+  display: flex;
+  flex-direction: column;
+  margin-top: 14px;
+}
+
+.slide2-heading {
+  font-family: var(--font-serif);
+  font-size: 44px;
+  font-weight: 700;
+  color: var(--color-green-dark);
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.underline-accent {
+  position: relative;
+  display: inline-block;
+}
+
+.underline-accent::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 227px;
+  height: 3.2px;
+  background-color: var(--color-terracotta);
+  border-radius: 1.5px;
+  transform-origin: left center;
+  transform: scaleX(1);
+}
+
+#slide-2.is-animating-underline .underline-accent::after {
+  animation: drawTitleUnderline 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+@keyframes drawTitleUnderline {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+.slide2-heading .subtitle,
+.slide2-title-group .subtitle {
+  font-family: var(--font-sans);
+  font-size: 16.5px;
+  color: #333333;
+  font-weight: 400;
+  letter-spacing: 0.1px;
+  margin-top: 16px;
+  margin-bottom: 0;
+}
+
+.mint-pill {
+  position: absolute;
+  left: 965px;
+  top: 12px;
+  width: 292px;
+  height: 33px;
+  background-color: #d5e7db;
+  color: #0f7166;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  border-radius: 4px;
+  border: 1px solid rgba(15, 113, 102, 0.25);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+/* Grid das 4 Colunas */
+.columns-grid {
+  position: absolute;
+  left: 84px;
+  top: 238px;
+  width: 1276px;
+  height: 384px;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  z-index: 2;
+  overflow: visible;
+  perspective: 1200px;
+}
+
+/* Estilo Comum das Colunas */
+.column-card {
+  width: 300px;
+  height: 384px;
+  position: relative;
+  border-radius: 4px;
+  padding: 18px 16px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+  background-clip: padding-box;
+  z-index: 2;
+  cursor: pointer;
+  user-select: none;
+  transform-style: preserve-3d;
+  will-change: transform, box-shadow;
+  /* Transições suaves de 200 a 250ms */
+  transition: transform 0.24s cubic-bezier(0.2, 0.8, 0.4, 1),
+              box-shadow 0.24s ease,
+              z-index 0.24s step-start;
+  outline: none;
+}
+
+.column-card:focus-visible {
+  outline: 2px solid var(--color-green-dark);
+  outline-offset: 3px;
+}
+
+/* Sombra suave e profundidade durante hover */
+.column-card.is-hovering:not(.is-selected) {
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12), 0 3px 8px rgba(0, 0, 0, 0.06);
+  z-index: 8;
+}
+
+/* Quando algum cartão está selecionado no grid: os outros recuam discretamente para 98% */
+.columns-grid.has-selected .column-card:not(.is-selected) {
+  transform: scale(0.98);
+  opacity: 1; /* Texto e elementos 100% legíveis, sem escurecer ou desfocar */
+  z-index: 1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Cartão selecionado: frente plana (sem inclinação 3D), ampliação de 6%, sombra de destaque */
+.column-card.is-selected {
+  transform: scale(1.06) !important;
+  z-index: 20 !important;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18), 0 6px 14px rgba(0, 0, 0, 0.08);
+}
+
+.column-card .tape-strip {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-0.5deg);
+  width: 52px;
+  height: 16px;
+  background: rgba(235, 230, 210, 0.75);
+  border: 1px solid rgba(210, 205, 185, 0.45);
+  border-radius: 2px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.col-top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.col-bar-brown { background-color: #865436; }
+.col-bar-terracotta { background-color: #c66e4e; }
+.col-bar-teal { background-color: #047e7b; }
+.col-bar-gold { background-color: #dfa82a; }
+
+.col-header {
+  height: 38px;
+  margin-top: 4px;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.col-session-num {
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: #865436;
+  line-height: 1.2;
+}
+
+.col-session-title {
+  font-family: var(--font-sans);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: #666666;
+  text-transform: uppercase;
+  margin-top: 2px;
+  line-height: 1.2;
+}
+
+.col-illustration {
+  height: 148px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0;
+}
+
+.col-svg {
+  width: 100%;
+  height: 112px;
+}
+
+.col-ill-caption {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: var(--color-green-dark);
+  margin-top: 6px;
+  line-height: 1;
+  text-align: center;
+  width: 100%;
+}
+
+.col-body {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  margin-top: 8px;
+  padding-top: 12px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-col-1 .col-body { border-top-color: rgba(134, 84, 54, 0.22); }
+.card-col-2 .col-body { border-top-color: rgba(198, 110, 78, 0.22); }
+.card-col-3 .col-body { border-top-color: rgba(4, 126, 123, 0.22); }
+.card-col-4 .col-body { border-top-color: rgba(223, 168, 42, 0.22); }
+
+.col-action-title {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-green-dark);
+  line-height: 1.15;
+  margin: 0 0 8px 0;
+  min-height: 55px;
+}
+
+.col-description {
+  font-family: var(--font-sans);
+  font-size: 15.6px;
+  font-weight: 400;
+  color: #2b2b2b;
+  line-height: 1.45;
+  letter-spacing: -0.15px;
+  margin: 0 -2px 0 0;
+}
+
+/* Cores de fundo específicas e 100% opacas de cada coluna */
+.card-col-1 { background-color: #f1e3cd; }
+.card-col-2 { background-color: #fffdf6; }
+.card-col-3 { background-color: #d5e7db; }
+.card-col-4 { background-color: #f7e7c8; }
+
+.text-teal { color: #047e7b !important; }
+.text-mustard { color: #997010 !important; }
+
+/* ==========================================================================
+   EFEITO 1 (SLIDE 2): CONTORNO SENDO DESENHADO (~500ms)
+   ========================================================================== */
+.card-pen-outline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 11;
+  overflow: visible;
+}
+
+.pen-outline-rect {
+  fill: none;
+  stroke-width: 2.2px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  opacity: 0;
+  transition: stroke-dashoffset 0.36s ease-out,
+              opacity 0.28s ease;
+}
+
+.card-col-1 .pen-outline-rect { stroke: #865436; }
+.card-col-2 .pen-outline-rect { stroke: #c66e4e; }
+.card-col-3 .pen-outline-rect { stroke: #047e7b; }
+.card-col-4 .pen-outline-rect { stroke: #dfa82a; }
+
+.column-card:hover .pen-outline-rect,
+.column-card.is-hovering .pen-outline-rect,
+.column-card.is-selected .pen-outline-rect {
+  stroke-dashoffset: 0;
+  opacity: 1;
+  transition: stroke-dashoffset 0.5s cubic-bezier(0.25, 0.8, 0.25, 1),
+              opacity 0.12s ease;
+}
+
+/* ==========================================================================
+   EFEITO 2 (SLIDE 2): PONTINHA DO PAPEL LEVANTANDO (CANTO INFERIOR DIREITO)
+   ========================================================================== */
+.paper-corner-fold {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 30px;
+  height: 30px;
+  pointer-events: none;
+  z-index: 12;
+  transform-origin: 100% 100%;
+  transform: scale(0);
+  opacity: 0;
+  transition: transform 0.26s cubic-bezier(0.2, 0.8, 0.4, 1),
+              opacity 0.2s ease;
+}
+
+.corner-fold-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Superfície do caderno revelada por baixo do canto levantado */
+.fold-under-bg {
+  fill: #ece5d5;
+}
+
+/* Sombra projetada por baixo da pontinha levantada */
+.fold-under-shadow {
+  fill: rgba(23, 59, 52, 0.24);
+}
+
+/* Sombra suave da dobra sobre a face do cartão */
+.fold-flap-shadow {
+  fill: rgba(0, 0, 0, 0.14);
+}
+
+/* Aba dobrada com tom de verso de papel e traço correspondente à coluna */
+.fold-flap {
+  stroke-width: 1.3px;
+  stroke-linejoin: round;
+}
+
+.card-col-1 .fold-flap { fill: #e3cfb0; stroke: #865436; }
+.card-col-2 .fold-flap { fill: #efe9da; stroke: #c66e4e; }
+.card-col-3 .fold-flap { fill: #bed6c6; stroke: #047e7b; }
+.card-col-4 .fold-flap { fill: #ead4aa; stroke: #dfa82a; }
+
+.column-card:hover .paper-corner-fold,
+.column-card.is-hovering .paper-corner-fold,
+.column-card.is-selected .paper-corner-fold {
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* ==========================================================================
+   EFEITOS 3 E 4 (SLIDE 2): CONEXÕES EM SEQUÊNCIA + MOEDINHA PERCORRENDO (~2s)
+   ========================================================================== */
+.col-connector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  flex-shrink: 0;
+  opacity: 0.82;
+  pointer-events: none;
+}
+
+.connector-line {
+  stroke-dasharray: 46;
+  stroke-dashoffset: 0;
+  opacity: 1;
+}
+
+/* Desenho sequencial dos 3 conectores da esquerda para a direita (~2.8s total) */
+.columns-grid.is-playing-sequence .col-connector-1 .connector-line {
+  animation: drawSlide2Connector 0.52s cubic-bezier(0.25, 0.8, 0.25, 1) 0.28s both;
+}
+
+.columns-grid.is-playing-sequence .col-connector-2 .connector-line {
+  animation: drawSlide2Connector 0.52s cubic-bezier(0.25, 0.8, 0.25, 1) 1.12s both;
+}
+
+.columns-grid.is-playing-sequence .col-connector-3 .connector-line {
+  animation: drawSlide2Connector 0.52s cubic-bezier(0.25, 0.8, 0.25, 1) 1.96s both;
+}
+
+@keyframes drawSlide2Connector {
+  0% {
+    stroke-dashoffset: 46;
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+/* Destaque breve na faixa superior colorida de cada cartão sincronizado com a chegada */
+.columns-grid.is-playing-sequence .card-col-1 .col-top-bar {
+  animation: topBarHighlightPulse 0.55s ease-out 0.07s;
+}
+
+.columns-grid.is-playing-sequence .card-col-2 .col-top-bar {
+  animation: topBarHighlightPulse 0.55s ease-out 0.88s;
+}
+
+.columns-grid.is-playing-sequence .card-col-3 .col-top-bar {
+  animation: topBarHighlightPulse 0.55s ease-out 1.72s;
+}
+
+.columns-grid.is-playing-sequence .card-col-4 .col-top-bar {
+  animation: topBarHighlightPulse 0.50s ease-out 2.48s;
+}
+
+@keyframes topBarHighlightPulse {
+  0% {
+    height: 8px;
+    filter: brightness(1);
+    box-shadow: 0 0 0 rgba(244, 205, 78, 0);
+  }
+  45% {
+    height: 11px;
+    filter: brightness(1.25);
+    box-shadow: 0 3px 12px rgba(244, 205, 78, 0.65);
+  }
+  100% {
+    height: 8px;
+    filter: brightness(1);
+    box-shadow: 0 0 0 rgba(244, 205, 78, 0);
+  }
+}
+
+/* Moedinha decorativa com "R$" acima dos cartões (centros: 150px, 475px, 801px, 1126px) */
+.slide2-step-coin {
+  position: absolute;
+  top: -34px;
+  left: 0;
+  width: 26px;
+  height: 26px;
+  margin-left: -13px;
+  pointer-events: none;
+  z-index: 25;
+  opacity: 0;
+  transform: translate3d(150px, 0, 0) scale(0.6);
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.16));
+}
+
+.step-coin-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.columns-grid.is-playing-sequence .slide2-step-coin {
+  animation: stepCoinJourney 2.8s linear forwards;
+}
+
+@keyframes stepCoinJourney {
+  0% {
+    transform: translate3d(150px, 3px, 0) scale(0.5);
+    opacity: 0;
+    animation-timing-function: ease-out;
+  }
+  5% {
+    /* 0.14s: Chegada no centro do Cartão 1 (Aula 01) */
+    transform: translate3d(150px, 0px, 0) scale(1.06);
+    opacity: 1;
+    animation-timing-function: ease-in-out;
+  }
+  10% {
+    /* 0.28s: Inicia trajeto tranquilo 1 -> 2 (duração: 0.67s) */
+    transform: translate3d(150px, 0px, 0) scale(1);
+    opacity: 1;
+    animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1);
+  }
+  34% {
+    /* 0.95s: Chegada suave no centro do Cartão 2 (Aulas 02-04) */
+    transform: translate3d(475px, 0px, 0) scale(1.06);
+    opacity: 1;
+    animation-timing-function: ease-in-out;
+  }
+  40% {
+    /* 1.12s: Inicia trajeto tranquilo 2 -> 3 (duração: 0.67s) */
+    transform: translate3d(475px, 0px, 0) scale(1);
+    opacity: 1;
+    animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1);
+  }
+  64% {
+    /* 1.79s: Chegada suave no centro do Cartão 3 (Aulas 05-06) */
+    transform: translate3d(801px, 0px, 0) scale(1.06);
+    opacity: 1;
+    animation-timing-function: ease-in-out;
+  }
+  70% {
+    /* 1.96s: Inicia trajeto tranquilo 3 -> 4 (duração: 0.62s) */
+    transform: translate3d(801px, 0px, 0) scale(1);
+    opacity: 1;
+    animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1);
+  }
+  92% {
+    /* 2.58s: Chegada suave no centro do Cartão 4 (Aulas 07-08) */
+    transform: translate3d(1126px, 0px, 0) scale(1.06);
+    opacity: 1;
+    animation-timing-function: ease-out;
+  }
+  100% {
+    /* 2.80s: Desaparece suavemente sem espera extra no final */
+    transform: translate3d(1126px, -4px, 0) scale(0.75);
+    opacity: 0;
+  }
+}
+
+/* Banner Inferior com Conceitos Fundamentais */
+.concept-banner {
+  position: absolute;
+  left: 84px;
+  top: 644px;
+  width: 1276px;
+  height: 100px;
+  background-color: var(--color-green-dark);
+  border-radius: 6px;
+  padding: 0 36px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
+  z-index: 3;
+  box-sizing: border-box;
+}
+
+.concept-col-badge {
+  flex-shrink: 0;
+}
+
+.concept-badge-text {
+  color: #f0c65c;
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.concept-divider {
+  width: 1px;
+  height: 54px;
+  background-color: rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
+}
+
+.concept-col {
+  flex: 1;
+  padding: 10px 14px;
+  margin: 0 -8px;
+  border-radius: 5px;
+  cursor: pointer;
+  user-select: none;
+  background-color: transparent;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+}
+
+.concept-col:hover,
+.concept-col.is-hovering {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.concept-col.is-expanded {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.concept-col.is-expanded:hover,
+.concept-col.is-expanded.is-hovering {
+  background-color: rgba(255, 255, 255, 0.11);
+}
+
+.concept-col:focus-visible {
+  outline: 2px solid #f0c65c;
+  outline-offset: 2px;
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.concept-header-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 5px 0;
+}
+
+.concept-icon {
+  flex-shrink: 0;
+  display: block;
+  transform: translateY(0);
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.4, 1);
+}
+
+.concept-col:hover .concept-icon,
+.concept-col.is-hovering .concept-icon,
+.concept-col:focus-visible .concept-icon {
+  transform: translateY(-2px);
+}
+
+.concept-term {
+  font-family: var(--font-serif);
+  font-size: 21px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.concept-def-stage {
+  display: grid;
+  align-items: center;
+}
+
+.concept-def {
+  grid-area: 1 / 1;
+  font-family: var(--font-sans);
+  font-size: 16.5px;
+  color: #e2ece8;
+  line-height: 1.35;
+  margin: 0;
+  transition: opacity 0.2s ease;
+}
+
+.concept-def-initial {
+  opacity: 1;
+}
+
+.concept-def-alt {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.concept-col.is-expanded .concept-def-initial {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.concept-col.is-expanded .concept-def-alt {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.highlight-yellow-soft {
+  color: #f7d97e;
+  font-weight: 600;
+}
+
+.highlight-terracotta-light {
+  color: #f6b097;
+  font-weight: 600;
+}
+
+#slide-2 .slide-footer {
+  position: absolute;
+  left: 84px;
+  bottom: 20px;
+  z-index: 2;
+}
+
+
+/* ==========================================================================
+   TELA 3: METODOLOGIA PEDAGÓGICA
+   ========================================================================== */
+.slide3-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-top: 28px;
+  position: relative;
+}
+
+.slide3-decorations {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+#slide-3 .header-corner-block {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 255px;
+  height: 66px;
+  background-color: var(--color-green-dark);
+  z-index: 25;
+}
+
+.cross-slide3 {
+  position: absolute;
+  top: 230px;
+  left: 42px;
+  color: var(--color-terracotta);
+  font-family: var(--font-serif);
+  font-size: 24px;
+  opacity: 0.75;
+}
+
+.protractor-watermark {
+  position: absolute;
+  top: 235px;
+  right: 64px;
+  opacity: 0.6;
+}
+
+.slide3-title-row {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-bottom: 22px;
+}
+
+.slide3-heading {
+  font-family: var(--font-serif);
+  font-size: 45px;
+  font-weight: 700;
+  color: var(--color-green-dark);
+  line-height: 1.15;
+  margin-bottom: 6px;
+}
+
+/* Grid dos Três Eixos da Metodologia */
+.method-cards-grid {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 18px;
+  position: relative;
+  z-index: 5;
+  perspective: 1100px;
+}
+
+.method-card {
+  flex: 1;
+  position: relative;
+  border-radius: 4px;
+  padding: 16px 20px 16px 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07);
+  min-height: 400px;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  transform-origin: center center;
+  transition: transform 0.26s cubic-bezier(0.2, 0.8, 0.4, 1),
+              box-shadow 0.26s ease,
+              opacity 0.26s ease;
+  will-change: transform, box-shadow;
+}
+
+/* Segunda folha ligeiramente deslocada atrás de cada card (efeito de papéis sobrepostos) */
+.method-card .paper-layer-back {
+  display: block;
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: -1;
+  transition: transform 0.26s cubic-bezier(0.2, 0.8, 0.4, 1),
+              box-shadow 0.26s ease;
+}
+
+.card-method-1 .paper-layer-back {
+  background-color: #e5d7bd;
+  transform: translate(6px, 6px) rotate(0.8deg);
+  box-shadow: 0 4px 14px rgba(70, 42, 20, 0.12);
+  border: 1px solid rgba(141, 79, 43, 0.14);
+}
+
+.card-method-2 .paper-layer-back {
+  background-color: #c4dcce;
+  transform: translate(-5px, 6px) rotate(-0.7deg);
+  box-shadow: 0 4px 14px rgba(15, 60, 50, 0.12);
+  border: 1px solid rgba(15, 113, 102, 0.14);
+}
+
+.card-method-3 .paper-layer-back {
+  background-color: #eee7dc;
+  transform: translate(5px, 6px) rotate(0.6deg);
+  box-shadow: 0 4px 14px rgba(70, 50, 40, 0.10);
+  border: 1px solid rgba(160, 140, 115, 0.18);
+}
+
+.method-card:hover:not(.is-selected) .paper-layer-back,
+.method-card.is-hovering:not(.is-selected) .paper-layer-back {
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.14);
+}
+
+.method-card.is-selected .paper-layer-back {
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
+}
+
+.method-card:hover:not(.is-selected),
+.method-card.is-hovering:not(.is-selected) {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.12), 0 4px 10px rgba(0, 0, 0, 0.06);
+  z-index: 8;
+}
+
+.method-card:focus-visible {
+  outline: 2.5px solid var(--color-yellow-gold);
+  outline-offset: 4px;
+}
+
+.method-cards-grid.has-selected .method-card:not(.is-selected):not(:hover):not(.is-hovering) {
+  transform: scale(0.985);
+  opacity: 0.92;
+}
+
+/* Destaque do Card Selecionado (crescimento suave de ~4% e contorno na cor da faixa superior) */
+.method-card.is-selected {
+  transform: translateY(-3px) scale(1.04) !important;
+  z-index: 12;
+  opacity: 1;
+}
+
+.card-method-1.is-selected,
+.card-method-3.is-selected {
+  box-shadow: inset 0 0 0 2.4px #8d4f2b,
+              0 14px 30px rgba(0, 0, 0, 0.15),
+              0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.card-method-2.is-selected {
+  box-shadow: inset 0 0 0 2.4px #0f7166,
+              0 14px 30px rgba(0, 0, 0, 0.15),
+              0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* Materiais diferenciados para cada card (Kraft, Verde e Creme Claro com texturas táteis) */
+.card-method-1 {
+  background-color: #eee2ca;
+  background-image:
+    radial-gradient(rgba(141, 79, 43, 0.045) 1px, transparent 0),
+    radial-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 0);
+  background-size: 16px 16px, 24px 24px;
+  background-position: 0 0, 8px 8px;
+}
+
+.card-method-2 {
+  background-color: #d5e8dc;
+  background-image:
+    radial-gradient(rgba(15, 113, 102, 0.04) 1px, transparent 0);
+  background-size: 18px 18px;
+}
+
+.card-method-3 {
+  background-color: #fcfaf5;
+  background-image:
+    radial-gradient(rgba(180, 160, 130, 0.05) 1px, transparent 0);
+  background-size: 20px 20px;
+}
+
+.method-card-header {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.method-epoch-tag {
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+}
+
+/* Conjuntos de ilustrações sem círculos externos decorativos, com protagonismo ampliado */
+.method-illustration {
+  height: 142px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.method-svg {
+  width: 204px;
+  height: 114px;
+  max-width: 100%;
+  overflow: visible;
+}
+
+.method-svg-magnifier {
+  width: 212px;
+  height: 118px;
+}
+
+/* Animações sutis dos ícones do Slide 3 (executadas uma vez por entrada do mouse ou seleção no toque) */
+.method-smoke {
+  opacity: 0;
+  transform-origin: center bottom;
+  pointer-events: none;
+}
+
+.card-method-1.animating-icon .method-smoke {
+  animation: methodSmokeRise 0.8s ease-out forwards;
+}
+
+.card-method-1.animating-icon .method-smoke-1 { animation-delay: 0s; }
+.card-method-1.animating-icon .method-smoke-2 { animation-delay: 0.12s; }
+.card-method-1.animating-icon .method-smoke-3 { animation-delay: 0.06s; }
+.card-method-1.animating-icon .method-smoke-4 { animation-delay: 0.18s; }
+
+@keyframes methodSmokeRise {
+  0% {
+    opacity: 0;
+    transform: translateY(2px) scale(0.8);
+  }
+  25% {
+    opacity: 0.85;
+  }
+  60% {
+    opacity: 0.55;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-8px) scale(1.15);
+  }
+}
+
+.method-die-1 {
+  transform-origin: 68px 59px;
+}
+
+.method-die-2 {
+  transform-origin: 110px 61px;
+}
+
+.card-method-2.animating-icon .method-die-1 {
+  animation: methodDie1Settle 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.card-method-2.animating-icon .method-die-2 {
+  animation: methodDie2Settle 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.05s forwards;
+}
+
+@keyframes methodDie1Settle {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  28% {
+    transform: translate(-2px, -4px) rotate(-13deg);
+  }
+  62% {
+    transform: translate(1px, 1px) rotate(5deg);
+  }
+  82% {
+    transform: translate(0, -0.5px) rotate(-2deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+@keyframes methodDie2Settle {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  30% {
+    transform: translate(2px, -4.5px) rotate(15deg);
+  }
+  65% {
+    transform: translate(-1px, 1px) rotate(-6deg);
+  }
+  84% {
+    transform: translate(0, -0.5px) rotate(2deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+.method-magnifier-group {
+  transform-origin: 96px 46px;
+}
+
+.method-question-mark {
+  transform-origin: 96px 50px;
+}
+
+.card-method-3.animating-icon .method-magnifier-group {
+  animation: methodMagnifierSearch 0.8s ease-in-out forwards;
+}
+
+.card-method-3.animating-icon .method-question-mark {
+  animation: methodQuestionHighlight 0.8s ease-in-out forwards;
+}
+
+@keyframes methodMagnifierSearch {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  30% {
+    transform: translate(-6px, -2px) rotate(-5deg);
+  }
+  68% {
+    transform: translate(6px, 2px) rotate(4deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+@keyframes methodQuestionHighlight {
+  0% {
+    transform: scale(1);
+    fill: #8d4f2b;
+  }
+  38% {
+    transform: scale(1.22);
+    fill: #c66e4e;
+  }
+  70% {
+    transform: scale(1.14);
+    fill: #d08234;
+  }
+  100% {
+    transform: scale(1);
+    fill: #8d4f2b;
+  }
+}
+
+.method-body {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.card-method-1 .method-body { border-top-color: rgba(141, 79, 43, 0.22); }
+.card-method-2 .method-body { border-top-color: rgba(15, 113, 102, 0.22); }
+.card-method-3 .method-body { border-top-color: rgba(141, 79, 43, 0.18); }
+
+.method-action-title {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-green-dark);
+  text-align: center;
+  line-height: 1.15;
+}
+
+.method-description {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--color-text-body);
+  line-height: 1.45;
+  text-align: center;
+}
+
+/* ==========================================================================
+   DESTAQUE DE MARCA-TEXTO AMARELO SUAVE NA SELEÇÃO (~450ms)
+   ========================================================================== */
+.method-ink-highlight {
+  display: inline;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  position: relative;
+  padding: 1px 3px;
+  border-radius: 3px;
+  background-image: linear-gradient(
+    to right,
+    rgba(240, 198, 92, 0.72) 0%,
+    rgba(244, 205, 78, 0.82) 50%,
+    rgba(247, 217, 126, 0.75) 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 0% 86%;
+  background-position: left 85%;
+  transition: background-size 0.45s cubic-bezier(0.25, 0.9, 0.35, 1);
+  color: inherit;
+}
+
+.method-card.is-selected .method-ink-highlight {
+  background-size: 100% 86%;
+  transition: background-size 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ==========================================================================
+   ANOTAÇÕES DE ESTUDO NA BASE DOS CARDS (TIRAS DE PAPEL ALINHADAS)
+   ========================================================================== */
+.card-study-note {
+  margin-top: auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 12px 7px 14px;
+  border-radius: 3px 2px 3px 2px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  pointer-events: none;
+  cursor: default;
+  min-height: 34px;
+}
+
+.note-text {
+  font-family: var(--font-sans);
+  font-size: 12.8px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  line-height: 1.25;
+  text-align: center;
+}
+
+/* Pino metálico / fita adesiva discreta na tira de anotação */
+.note-pin {
+  position: absolute;
+  top: -4px;
+  left: 12px;
+  width: 18px;
+  height: 8px;
+  border-radius: 1px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+  transform: rotate(-3deg);
+}
+
+/* 1. Anotação do Card 1 (Compreender - Kraft claro): tira marfim claro com traço pontilhado terracota */
+.note-kraft {
+  background-color: #fdfcf8;
+  border: 1px dashed rgba(141, 79, 43, 0.38);
+  color: #522d17;
+}
+.note-kraft .note-pin {
+  background: rgba(189, 130, 93, 0.6);
+}
+
+/* 2. Anotação do Card 2 (Participar - Verde): tira creme claro com traço pontilhado verde */
+.note-mint {
+  background-color: #fbfdfc;
+  border: 1px dashed rgba(15, 113, 102, 0.38);
+  color: #0b4f47;
+}
+.note-mint .note-pin {
+  background: rgba(15, 113, 102, 0.45);
+}
+
+/* 3. Anotação do Card 3 (Refletir - Creme claro): tira kraft suave com traço pontilhado terracota */
+.note-cream {
+  background-color: #f2e4ce;
+  border: 1px dashed rgba(141, 79, 43, 0.35);
+  color: #462817;
+}
+.note-cream .note-pin {
+  background: rgba(198, 110, 78, 0.5);
+}
+
+/* Faixa do Percurso Pedagógico */
+.path-sequence-wrapper {
+  background-color: #f0e4d2;
+  border-radius: 6px;
+  padding: 12px 24px 14px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: auto;
+  margin-bottom: 8px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  position: relative;
+  z-index: 5;
+}
+
+.path-title-tag {
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--color-green-dark);
+  text-transform: uppercase;
+}
+
+.path-pills-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.path-pill {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  color: var(--color-white);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  outline: none;
+  transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.4, 1),
+              box-shadow 0.22s ease,
+              filter 0.22s ease;
+}
+
+.path-pill:hover:not(.is-selected) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.18);
+}
+
+.path-pill:focus-visible {
+  outline: 2.5px solid var(--color-yellow-gold);
+  outline-offset: 3px;
+}
+
+/* Indicação visual discreta na etapa selecionada */
+.path-pill.is-selected {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 0 0 2px #f0e4d2,
+              0 0 0 4.5px var(--color-green-dark),
+              0 6px 14px rgba(0, 0, 0, 0.2);
+}
+
+.pill-step-1 { background-color: var(--color-green-dark); }
+.pill-step-2 { background-color: var(--color-terracotta-dark); }
+
+/* Na etapa amarela "03 VIVENCIAR", texto em verde escuro para leitura ideal */
+.pill-step-3 {
+  background-color: #f0c65c;
+  color: var(--color-green-dark);
+}
+
+.pill-step-3 .pill-num,
+.pill-step-3 .pill-label {
+  color: var(--color-green-dark);
+  opacity: 1;
+}
+
+.pill-step-4 { background-color: var(--color-teal-dark); }
+
+.pill-num {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 800;
+  opacity: 0.9;
+}
+
+.pill-label {
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+}
+
+/* Conectores do Percurso Pedagógico (desenhados da esquerda para a direita em ~2s na entrada) */
+.path-connector-line {
+  width: 22px;
+  height: 2.5px;
+  background-color: rgba(22, 60, 51, 0.14);
+  border-radius: 2px;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.path-connector-line::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-green-dark);
+  border-radius: 2px;
+  transform-origin: left center;
+  transform: scaleX(1);
+}
+
+.path-sequence-wrapper.is-playing-path .path-connector-line::after {
+  transform: scaleX(0);
+}
+
+.path-sequence-wrapper.is-playing-path .pill-step-1 {
+  animation: pathStepPulse 0.36s ease-out 0s forwards;
+}
+
+.path-sequence-wrapper.is-playing-path .path-conn-1::after {
+  animation: drawPathConnector 0.36s cubic-bezier(0.25, 0.9, 0.4, 1) 0.22s forwards;
+}
+
+.path-sequence-wrapper.is-playing-path .pill-step-2 {
+  animation: pathStepPulse 0.36s ease-out 0.55s forwards;
+}
+
+.path-sequence-wrapper.is-playing-path .path-conn-2::after {
+  animation: drawPathConnector 0.36s cubic-bezier(0.25, 0.9, 0.4, 1) 0.78s forwards;
+}
+
+.path-sequence-wrapper.is-playing-path .pill-step-3 {
+  animation: pathStepPulse 0.36s ease-out 1.10s forwards;
+}
+
+.path-sequence-wrapper.is-playing-path .path-conn-3::after {
+  animation: drawPathConnector 0.36s cubic-bezier(0.25, 0.9, 0.4, 1) 1.32s forwards;
+}
+
+.path-sequence-wrapper.is-playing-path .pill-step-4 {
+  animation: pathStepPulse 0.36s ease-out 1.64s forwards;
+}
+
+@keyframes drawPathConnector {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes pathStepPulse {
+  0% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+  }
+  50% {
+    transform: translateY(-3px) scale(1.035);
+    box-shadow: 0 0 0 2px #f0e4d2, 0 0 0 4px rgba(23, 59, 52, 0.55), 0 8px 18px rgba(0, 0, 0, 0.18);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+  }
+}
+
+
+/* ==========================================================================
+   TELA 4: APLICAÇÃO NAS ESCOLAS - LAYOUT CALIBRADO
+   ========================================================================== */
+
+/* Faixa superior institucional com selo PROJETO DE EXTENSÃO em linha própria */
+.slide4-top-meta {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 10;
+}
+
+.slide4-top-meta .badge-tag.dark-badge {
+  background-color: var(--color-green-dark);
+  color: var(--color-white);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  padding: 5px 14px;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: inline-flex;
+  align-items: center;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.slide4-top-meta .header-line {
+  height: 1px;
+  background-color: rgba(23, 59, 52, 0.22);
+  flex: 1;
+  max-width: 580px;
+}
+
+#slide-4 .header-corner-block {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 255px;
+  height: 66px;
+  background-color: var(--color-green-dark);
+  z-index: 25;
+}
+
+.slide4-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-top: 24px;
+  position: relative;
+}
+
+.slide4-decorations {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cross-slide4 {
+  position: absolute;
+  top: 235px;
+  right: 50px;
+  color: var(--color-terracotta);
+  font-family: var(--font-serif);
+  font-size: 26px;
+  opacity: 0.75;
+}
+
+/* Cabeçalho do Slide 4: 04 alinhado ao título principal */
+.slide4-title-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 22px;
+  margin-bottom: 20px;
+}
+
+.slide4-title-row .badge-number-kraft {
+  margin-top: 2px; /* Alinhamento óptico com a linha superior do título */
+  flex-shrink: 0;
+}
+
+.slide4-heading {
+  font-family: var(--font-serif);
+  font-size: 45px;
+  font-weight: 700;
+  color: var(--color-green-dark);
+  line-height: 1.15;
+  margin-bottom: 6px;
+}
+
+/* Grid de Dois Blocos da Aplicação */
+.application-grid {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 28px;
+  margin-bottom: 18px;
+  position: relative;
+  z-index: 5;
+}
+
+/* Bloco Esquerda: Kit Pedagógico (Papel Kraft com segunda camada ao fundo) */
+.kit-card {
+  flex: 1.1;
+  position: relative;
+  background-color: #eee2ca;
+  background-image:
+    radial-gradient(rgba(141, 79, 43, 0.045) 1px, transparent 0),
+    radial-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 0);
+  background-size: 16px 16px, 24px 24px;
+  background-position: 0 0, 8px 8px;
+  border-radius: 4px;
+  padding: 18px 22px 14px 22px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  min-height: 395px;
+  overflow: visible;
+}
+
+.kit-card .paper-layer-back {
+  display: block;
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: -1;
+  background-color: #e5d7bd;
+  transform: translate(6px, 6px) rotate(0.6deg);
+  box-shadow: 0 4px 14px rgba(70, 42, 20, 0.12);
+  border: 1px solid rgba(141, 79, 43, 0.14);
+}
+
+.kit-card-header {
+  margin-bottom: 8px;
+}
+
+.kit-section-tag {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  color: var(--color-terracotta-dark);
+  text-transform: uppercase;
+}
+
+.kit-title {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-green-dark);
+  margin-top: 4px;
+}
+
+.kit-illustration {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2px 0 4px 0;
+}
+
+.kit-svg {
+  width: 100%;
+  max-height: 205px;
+  overflow: visible;
+}
+
+/* Transições e destaques visuais do Tabuleiro e Carta no painel do Kit */
+.kit-board-group {
+  transform-origin: 126px 88px;
+  transition: filter 0.35s ease, transform 0.35s cubic-bezier(0.2, 0.8, 0.25, 1);
+}
+
+.kit-track-line {
+  transition: stroke 0.3s ease, stroke-width 0.3s ease;
+}
+
+.application-grid.is-vivenciar-active .kit-board-group {
+  filter: drop-shadow(0 8px 22px rgba(15, 113, 102, 0.38));
+  transform: translateY(-3px) scale(1.02);
+}
+
+.application-grid.is-vivenciar-active .kit-board-group .kit-track-line {
+  stroke: #047e7b;
+  stroke-width: 3.4px;
+}
+
+/* Peça / Moeda que percorre a Trilha de 1 a 6 */
+.kit-trail-token {
+  transform-origin: 0 0;
+  transform: translate(306px, 154px) scale(1);
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.25, 1);
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Quando Vivenciar estiver ativo, a animação percorre as casas 1 a 6 (~2.0s) */
+#slide-4.is-animating-trail .kit-trail-token {
+  animation: kitTokenJourney 2.0s cubic-bezier(0.35, 0.1, 0.25, 1) both;
+}
+
+/* Estado estável da moeda no fim do trajeto enquanto Vivenciar estiver selecionado */
+.application-grid.is-vivenciar-active:not(.is-returning) .kit-trail-token {
+  transform: translate(53px, 99px) scale(0.44);
+}
+
+@keyframes kitTokenJourney {
+  0% {
+    transform: translate(306px, 154px) scale(1);
+  }
+  14% {
+    transform: translate(53px, 47px) scale(0.44);
+  }
+  28% {
+    transform: translate(122px, 47px) scale(0.44);
+  }
+  43% {
+    transform: translate(191px, 47px) scale(0.44);
+  }
+  58% {
+    transform: translate(191px, 99px) scale(0.44);
+  }
+  74% {
+    transform: translate(122px, 99px) scale(0.44);
+  }
+  90%, 100% {
+    transform: translate(53px, 99px) scale(0.44);
+  }
+}
+
+/* Destaque sutil de cada casa ao ser percorrida pela moeda */
+.board-house {
+  transition: filter 0.25s ease, stroke-width 0.25s ease, stroke 0.25s ease;
+}
+
+#slide-4.is-animating-trail #board-house-1 { animation: housePulse 0.35s ease 0.22s both; }
+#slide-4.is-animating-trail #board-house-2 { animation: housePulse 0.35s ease 0.52s both; }
+#slide-4.is-animating-trail #board-house-3 { animation: housePulse 0.35s ease 0.82s both; }
+#slide-4.is-animating-trail #board-house-4 { animation: housePulse 0.35s ease 1.15s both; }
+#slide-4.is-animating-trail #board-house-5 { animation: housePulse 0.35s ease 1.48s both; }
+#slide-4.is-animating-trail #board-house-6 { animation: housePulseFinal 0.45s ease 1.82s both; }
+
+@keyframes housePulse {
+  0%, 100% { filter: none; }
+  50% { filter: drop-shadow(0 0 6px rgba(244, 205, 78, 0.95)) brightness(1.2); stroke: #d09418; stroke-width: 2.8px; }
+}
+
+@keyframes housePulseFinal {
+  0% { filter: none; }
+  50% { filter: drop-shadow(0 0 9px rgba(15, 113, 102, 0.95)) brightness(1.25); stroke: #047e7b; stroke-width: 3.2px; }
+  100% { filter: drop-shadow(0 0 4px rgba(15, 113, 102, 0.5)); stroke: #0f7166; stroke-width: 2.6px; }
+}
+
+/* Camada superior de numeração das casas: 100% legível */
+.board-numbers-layer text {
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Carta superior: IMPREVISTO (com foco acessível e clique para prévia ampliada) */
+.kit-card-imprevisto {
+  transform: translate(268px, 30px) rotate(5deg);
+  transform-origin: 331px 72px;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.25, 1),
+              filter 0.35s ease;
+  will-change: transform, filter;
+  cursor: pointer;
+  outline: none;
+}
+
+.kit-card-imprevisto:hover {
+  filter: drop-shadow(0 6px 16px rgba(15, 113, 102, 0.32));
+}
+
+.kit-card-imprevisto:focus-visible {
+  outline: 2.5px solid var(--color-yellow-gold);
+  outline-offset: 3px;
+}
+
+/* Na chegada à estrela (após ~1.82s), a carta desliza alguns pixels para fora do monte */
+.application-grid.is-vivenciar-active .kit-card-imprevisto {
+  transform: translate(282px, 16px) rotate(9deg) scale(1.06);
+  filter: drop-shadow(0 12px 24px rgba(15, 113, 102, 0.42))
+          drop-shadow(0 0 2px rgba(240, 198, 92, 0.85));
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.25, 1) 1.82s,
+              filter 0.45s ease 1.82s;
+}
+
+/* Ao desmarcar Vivenciar ou trocar de etapa, devolve ao repouso sem atraso */
+.application-grid:not(.is-vivenciar-active) .kit-card-imprevisto {
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.25, 1) 0s,
+              filter 0.35s ease 0s;
+}
+
+.kit-footer-items {
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  color: var(--color-terracotta-dark);
+  text-align: center;
+  margin-top: 4px;
+}
+
+/* Bloco Direita: Como Aplicar (Papel Creme com segunda camada ao fundo) */
+.apply-card {
+  flex: 1.2;
+  position: relative;
+  background-color: #fdfbf7;
+  background-image:
+    radial-gradient(rgba(180, 160, 130, 0.05) 1px, transparent 0);
+  background-size: 20px 20px;
+  border-radius: 4px;
+  padding: 18px 24px 14px 24px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  min-height: 395px;
+  overflow: visible;
+}
+
+.apply-card .paper-layer-back {
+  display: block;
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: -1;
+  background-color: #eee7dc;
+  transform: translate(-5px, 6px) rotate(-0.5deg);
+  box-shadow: 0 4px 14px rgba(60, 50, 40, 0.10);
+  border: 1px solid rgba(160, 140, 115, 0.16);
+}
+
+.apply-top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background-color: var(--color-teal-dark);
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.apply-header {
+  margin-bottom: 12px;
+}
+
+.apply-tag {
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--color-teal-dark);
+  text-transform: uppercase;
+}
+
+/* Lista de passos com linha vertical contínua posicionada atrás dos círculos */
+.apply-steps-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 8px;
+  position: relative;
+  padding: 4px 0;
+}
+
+/* Linha vertical contínua posicionada atrás dos círculos numerados */
+.apply-timeline-line {
+  position: absolute;
+  left: 30.5px; /* centro exato dos círculos: padding do item (10px) + raio do círculo (22px) - metade da linha (1.5px) = 30.5px */
+  top: 28px;
+  bottom: 28px;
+  width: 3px;
+  background-color: rgba(22, 60, 51, 0.14);
+  border-radius: 2px;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.apply-timeline-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-green-dark);
+  border-radius: 2px;
+  transform-origin: top center;
+  transform: scaleY(1);
+}
+
+/* Animação do desenho da linha de cima para baixo ao entrar no slide */
+#slide-4.is-playing-sequence .apply-timeline-progress {
+  animation: drawApplyTimeline 0.85s cubic-bezier(0.25, 0.9, 0.35, 1) 0.15s both;
+}
+
+@keyframes drawApplyTimeline {
+  0% {
+    transform: scaleY(0);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+.apply-step-item {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  position: relative;
+  z-index: 2;
+  transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.4, 1),
+              background-color 0.22s ease,
+              box-shadow 0.22s ease;
+}
+
+.apply-step-item:hover:not(.is-selected) {
+  transform: translateX(4px);
+  background-color: rgba(15, 113, 102, 0.04);
+}
+
+.apply-step-item:focus-visible {
+  outline: 2.5px solid var(--color-yellow-gold);
+  outline-offset: 2px;
+}
+
+.step-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white);
+  font-family: var(--font-sans);
+  font-size: 18px;
+  font-weight: 800;
+  flex-shrink: 0;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.14);
+  position: relative;
+  z-index: 3;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.4, 1),
+              box-shadow 0.25s ease;
+}
+
+.step-num-brown { background-color: var(--color-terracotta-dark); }
+.step-num-teal { background-color: var(--color-teal-dark); }
+.step-num-gold { background-color: #dfa82a; }
+
+.step-content {
+  flex: 1;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.22s ease;
+}
+
+.step-title {
+  font-family: var(--font-serif);
+  font-size: 23px;
+  font-weight: 700;
+  color: var(--color-green-dark);
+  line-height: 1.2;
+  transition: color 0.22s ease;
+}
+
+.step-desc {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--color-text-body);
+  line-height: 1.35;
+  margin-top: 2px;
+}
+
+/* Destaques ao selecionar a etapa */
+.step-item-1.is-selected .step-circle {
+  transform: scale(1.1);
+  box-shadow: 0 0 0 3px #ffffff,
+              0 0 0 6px var(--color-terracotta-dark),
+              0 6px 14px rgba(141, 79, 43, 0.3);
+}
+.step-item-1.is-selected .step-content {
+  background-color: rgba(198, 110, 78, 0.08);
+}
+.step-item-1.is-selected .step-title {
+  color: var(--color-terracotta-dark);
+}
+
+.step-item-2.is-selected .step-circle {
+  transform: scale(1.1);
+  box-shadow: 0 0 0 3px #ffffff,
+              0 0 0 6px var(--color-teal-dark),
+              0 6px 14px rgba(15, 113, 102, 0.3);
+}
+.step-item-2.is-selected .step-content {
+  background-color: rgba(15, 113, 102, 0.08);
+}
+.step-item-2.is-selected .step-title {
+  color: var(--color-teal-dark);
+}
+
+.step-item-3.is-selected .step-circle {
+  transform: scale(1.1);
+  box-shadow: 0 0 0 3px #ffffff,
+              0 0 0 6px #dfa82a,
+              0 6px 14px rgba(223, 168, 42, 0.3);
+}
+.step-item-3.is-selected .step-content {
+  background-color: rgba(223, 168, 42, 0.1);
+}
+.step-item-3.is-selected .step-title {
+  color: #997010;
+}
+
+/* Banner de Fechamento da Extensão (clicável para destacar no momento da fala) */
+.extension-banner {
+  background-color: var(--color-green-dark);
+  border-radius: 6px;
+  padding: 14px 26px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
+  margin-top: 0;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 10;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.extension-banner:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
+}
+
+.extension-banner:focus-visible {
+  outline: 2.5px solid var(--color-yellow-gold);
+  outline-offset: 3px;
+}
+
+.extension-gold-bar {
+  width: 6px;
+  height: 44px;
+  background-color: var(--color-yellow-gold);
+  border-radius: 3px;
+  flex-shrink: 0;
+  transform-origin: top center;
+  transform: scaleY(1);
+}
+
+/* Barrinha amarela animando de cima para baixo após o desenho da linha (~1.05s) */
+#slide-4.is-playing-sequence .extension-gold-bar {
+  animation: goldBarDrop 0.45s cubic-bezier(0.22, 1, 0.36, 1) 1.05s both;
+}
+
+@keyframes goldBarDrop {
+  0% {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+.extension-banner-body {
+  flex: 1;
+}
+
+.extension-banner-title {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  color: var(--color-yellow-gold);
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.extension-banner-text {
+  font-family: var(--font-serif);
+  font-size: 21.5px;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.32;
+  letter-spacing: -0.15px;
+}
+
+/* Efeito de marca-texto amarelo sob a expressão com suporte natural a quebra de linha */
+.phrase-highlight-target {
+  display: inline;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  background-image: linear-gradient(
+    to bottom,
+    transparent 66%,
+    rgba(244, 205, 78, 0.95) 66%,
+    rgba(244, 205, 78, 0.95) 96%,
+    transparent 96%
+  );
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  background-position: left bottom;
+  transition: background-size 0.5s cubic-bezier(0.25, 0.9, 0.35, 1);
+  padding-bottom: 2px;
+}
+
+.extension-banner.is-highlighted .phrase-highlight-target {
+  background-size: 100% 100%;
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   CAMADA DE MOVIMENTO PRÓPRIA: MODAL DA CARTA DE IMPREVISTO
+   ========================================================================== */
+.card-preview-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.32s ease;
+}
+
+.card-preview-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.card-preview-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 35, 30, 0.48);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  cursor: pointer;
+}
+
+.card-preview-sheet {
+  position: relative;
+  z-index: 2;
+  width: 580px;
+  max-width: 90%;
+  background-color: #fdfbf7;
+  background-image:
+    radial-gradient(rgba(15, 113, 102, 0.04) 1px, transparent 0);
+  background-size: 20px 20px;
+  border: 2px solid var(--color-green-dark);
+  border-radius: 8px;
+  padding: 26px 30px 22px 30px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.32),
+              0 0 0 5px rgba(244, 205, 78, 0.35);
+  transform: translateY(28px) scale(0.92) rotate(-1.5deg);
+  transition: transform 0.36s cubic-bezier(0.2, 0.8, 0.25, 1);
+  outline: none;
+  cursor: pointer; /* Um segundo clique fecha e devolve a carta ao monte */
+}
+
+.card-preview-overlay.is-open .card-preview-sheet {
+  transform: translateY(0) scale(1) rotate(0deg);
+}
+
+.card-preview-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  background: #eee5d5;
+  border: 1px solid #cbbfae;
+  border-radius: 50%;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--color-green-dark);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.18s ease;
+  z-index: 10;
+}
+
+.card-preview-close:hover {
+  background-color: var(--color-terracotta-dark);
+  color: #ffffff;
+  border-color: var(--color-terracotta-dark);
+  transform: scale(1.08);
+}
+
+.card-preview-close:focus-visible {
+  outline: 2px solid var(--color-yellow-gold);
+  outline-offset: 2px;
+}
+
+.card-preview-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.preview-tag {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--color-terracotta-dark);
+  text-transform: uppercase;
+}
+
+.preview-badge-danger {
+  background-color: #e2f2ea;
+  color: var(--color-green-dark);
+  border: 1.2px solid var(--color-green-dark);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+  padding: 2.5px 9px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.preview-card-heading {
+  font-family: var(--font-serif);
+  font-size: 27px;
+  font-weight: 700;
+  color: var(--color-green-dark);
+  margin: 0 0 14px 0;
+  line-height: 1.2;
+}
+
+.preview-scenario-box {
+  background-color: #f5eedf;
+  border-left: 4px solid var(--color-yellow-gold);
+  padding: 12px 16px;
+  border-radius: 0 4px 4px 0;
+  margin-bottom: 16px;
+}
+
+.preview-scenario-text {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: #2b2b2b;
+  line-height: 1.45;
+  margin: 0 0 6px 0;
+}
+
+.preview-dilemma-text {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--color-terracotta-dark);
+  margin: 0;
+}
+
+.preview-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.preview-option-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #ffffff;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid rgba(15, 113, 102, 0.16);
+}
+
+.opt-letter {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-green-dark);
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.opt-desc {
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  color: #2e3834;
+  line-height: 1.38;
+}
+
+.preview-card-footer {
+  border-top: 1px dashed rgba(23, 59, 52, 0.25);
+  padding-top: 10px;
+  text-align: center;
+}
+
+.preview-footer-note {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+.slide4-footer {
+  justify-content: space-between;
+  padding-right: 365px;
+}
+
+.footer-right-tag {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+
+/* ==========================================================================
+   BARRA DE CONTROLES DISCRETOS DE NAVEGAÇÃO (REORGANIZADA NO RODAPÉ)
+   ========================================================================== */
+.nav-toolbar {
+  position: fixed;
+  bottom: 6px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: rgba(17, 24, 21, 0.9);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 3px 10px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.32);
+  z-index: 1000;
+  user-select: none;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.nav-toolbar.idle-hidden {
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+}
+
+.nav-toolbar:hover,
+.nav-toolbar:focus-within {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  pointer-events: auto !important;
+}
+
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #e5ece8;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3.5px 10px;
+  border-radius: 18px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.nav-btn:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.12);
+  color: var(--color-white);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.nav-btn:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.nav-btn:disabled {
+  opacity: 0.32;
+  cursor: not-allowed;
+  border-color: transparent;
+}
+
+.nav-btn:focus-visible {
+  outline: 2px solid var(--color-yellow-gold);
+  outline-offset: 2px;
+}
+
+.nav-btn-icon {
+  padding: 4.5px;
+  border-radius: 50%;
+}
+
+.slide-counter {
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #b5c7bf;
+  padding: 0 3px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.counter-sep {
+  opacity: 0.5;
+}
+
+
+/* ==========================================================================
+   ACESSIBILIDADE E PREFERÊNCIAS DE MOVIMENTO REDUZIDO
+   ========================================================================== */
+body.reduced-motion-active .coin-button,
+body.reduced-motion-active .coin-disc-svg,
+body.reduced-motion-active .coin-3d-wrapper,
+body.reduced-motion-active .coin-shadow,
+body.reduced-motion-active .coin-interactive-group.is-animating .coin-button,
+body.reduced-motion-active .coin-interactive-group.is-animating .coin-3d-wrapper,
+body.reduced-motion-active .coin-interactive-group.is-animating .coin-shadow,
+body.reduced-motion-active #slide-2.revealing,
+body.reduced-motion-active .slide,
+body.reduced-motion-active .nav-btn,
+body.reduced-motion-active .column-card,
+body.reduced-motion-active .columns-grid.has-selected .column-card,
+body.reduced-motion-active #slide-1 .paper-card,
+body.reduced-motion-active #slide-1 .card-kraft,
+body.reduced-motion-active #slide-1 .card-white,
+body.reduced-motion-active #slide-1 .card-mint,
+body.reduced-motion-active .smoke-line,
+body.reduced-motion-active .chart-crash-line,
+body.reduced-motion-active .btn-comprar-bg,
+body.reduced-motion-active .arrow-path,
+body.reduced-motion-active .pen-outline-rect,
+body.reduced-motion-active .paper-corner-fold,
+body.reduced-motion-active .connector-line,
+body.reduced-motion-active .col-top-bar,
+body.reduced-motion-active .slide2-step-coin {
+  animation: none !important;
+  transition: none !important;
+  clip-path: none !important;
+  -webkit-clip-path: none !important;
+}
+
+body.reduced-motion-active #slide-1 .paper-card:hover,
+body.reduced-motion-active #slide-1 .paper-card.is-hovering {
+  transform: none !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1) !important;
+}
+
+body.reduced-motion-active .smoke-line,
+body.reduced-motion-active .slide2-step-coin {
+  display: none !important;
+}
+
+body.reduced-motion-active .chart-crash-line,
+body.reduced-motion-active .connector-line {
+  stroke-dashoffset: 0 !important;
+  opacity: 1 !important;
+}
+
+body.reduced-motion-active .arrow-path {
+  stroke-dashoffset: 0 !important;
+  opacity: 1 !important;
+}
+
+body.reduced-motion-active .column-card.is-selected {
+  transform: none !important;
+  outline: none !important;
+}
+
+body.reduced-motion-active .column-card:hover .pen-outline-rect,
+body.reduced-motion-active .column-card.is-hovering .pen-outline-rect,
+body.reduced-motion-active .column-card.is-selected .pen-outline-rect {
+  stroke-dashoffset: 0 !important;
+  opacity: 1 !important;
+}
+
+body.reduced-motion-active .column-card:hover .paper-corner-fold,
+body.reduced-motion-active .column-card.is-hovering .paper-corner-fold,
+body.reduced-motion-active .column-card.is-selected .paper-corner-fold {
+  transform: scale(1) !important;
+  opacity: 1 !important;
+}
+
+body.reduced-motion-active .concept-col,
+body.reduced-motion-active .concept-icon,
+body.reduced-motion-active .concept-def {
+  transition: none !important;
+  transform: none !important;
+}
+
+body.reduced-motion-active #slide-2.is-animating-underline .underline-accent::after {
+  animation: none !important;
+  transform: scaleX(1) !important;
+}
+
+body.reduced-motion-active .method-card,
+body.reduced-motion-active .method-cards-grid.has-selected .method-card,
+body.reduced-motion-active .method-card .paper-layer-back,
+body.reduced-motion-active .method-ink-highlight,
+body.reduced-motion-active .path-pill,
+body.reduced-motion-active .path-connector-line::after,
+body.reduced-motion-active .method-smoke,
+body.reduced-motion-active .method-die-1,
+body.reduced-motion-active .method-die-2,
+body.reduced-motion-active .method-magnifier-group,
+body.reduced-motion-active .method-question-mark,
+body.reduced-motion-active #slide-1 .highlight-ink {
+  animation: none !important;
+  transition: none !important;
+}
+
+body.reduced-motion-active .path-connector-line::after {
+  transform: scaleX(1) !important;
+}
+
+body.reduced-motion-active .method-smoke {
+  display: none !important;
+}
+
+body.reduced-motion-active .method-card:hover:not(.is-selected),
+body.reduced-motion-active .method-card.is-hovering:not(.is-selected) {
+  transform: none !important;
+}
+
+body.reduced-motion-active #slide-4.is-playing-sequence .apply-timeline-progress,
+body.reduced-motion-active #slide-4.is-playing-sequence .extension-gold-bar,
+body.reduced-motion-active .apply-step-item,
+body.reduced-motion-active .apply-step-item .step-circle,
+body.reduced-motion-active .kit-card-imprevisto,
+body.reduced-motion-active .kit-board-group,
+body.reduced-motion-active .kit-trail-token,
+body.reduced-motion-active .board-house,
+body.reduced-motion-active .card-preview-overlay,
+body.reduced-motion-active .card-preview-sheet,
+body.reduced-motion-active .phrase-highlight-target,
+body.reduced-motion-active .extension-banner {
+  animation: none !important;
+  transition: none !important;
+}
+
+body.reduced-motion-active .apply-timeline-progress,
+body.reduced-motion-active .extension-gold-bar {
+  transform: scaleY(1) !important;
+  opacity: 1 !important;
+}
+
+body.reduced-motion-active #slide-4.is-animating-trail .kit-trail-token {
+  animation: none !important;
+  transform: translate(53px, 99px) scale(0.44) !important;
+}
+
+body.reduced-motion-active #slide-4.is-animating-trail .board-house {
+  animation: none !important;
+}
+
+
+/* ==========================================================================
+   CONFIGURAÇÃO DE IMPRESSÃO E EXPORTAÇÃO EM PDF (4 TELAS)
+   ========================================================================== */
+@media print {
+  @page {
+    size: 16in 9in landscape;
+    margin: 0;
+  }
+
+  html, body {
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  #presentation-viewport {
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    overflow: visible !important;
+    position: static !important;
+  }
+
+  .stage {
+    width: 100% !important;
+    height: auto !important;
+    box-shadow: none !important;
+    transform: none !important;
+    position: static !important;
+    overflow: visible !important;
+    background-color: transparent !important;
+  }
+
+  /* Oculta controles de navegação e botões interativos na impressão */
+  .nav-toolbar,
+  .coin-interactive-group {
+    display: none !important;
+  }
+
+  /* Na impressão, a faixa amarela de endividamento fica totalmente visível */
+  #slide-1 .highlight-ink {
+    clip-path: inset(0 0% 0 0) !important;
+  }
+
+  /* Exibe todos os quatro slides, um por página */
+  .slide {
+    display: flex !important;
+    opacity: 1 !important;
+    position: relative !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    overflow: hidden !important;
+    background-color: var(--bg-cream) !important;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 27px,
+      var(--color-notebook-line) 27px,
+      var(--color-notebook-line) 28px
+    ) !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}

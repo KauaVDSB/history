@@ -1,0 +1,26 @@
+# Materiais arquivados e locais (não vão para o GitHub/Vercel)
+_archive/
+
+# Backups e arquivos temporários de desenvolvimento
+*.bak
+*.bak_*
+backup/
+scratch/
+prompts/
+referencias/
+
+# Arquivos de sistema operacional
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# Configurações locais / Vercel
+.vercel
+.env
+.env.local

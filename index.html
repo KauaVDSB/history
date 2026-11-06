@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consumo e endividamento: duas faces de uma mesma moeda? | Pitch Acadêmico</title>
+  <!-- Fontes Locais (EB Garamond e Inter) para Funcionamento 100% Offline -->
+  <link rel="stylesheet" href="fonts/fonts.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="on-slide-1">
+
+  <!-- Palco da Apresentação com Proporção 16:9 -->
+  <main id="presentation-viewport" role="region" aria-label="Apresentação de Pitch Acadêmico">
+    <div id="presentation-stage" class="stage">
+
+      <!-- Faixas verdes finas estruturais que atravessam as bordas superior e inferior -->
+      <div class="stage-edge-bar stage-edge-top" aria-hidden="true"></div>
+      <div class="stage-edge-bar stage-edge-bottom" aria-hidden="true"></div>
+
+      <!-- ====================================================================
+           GRUPO INTERATIVO DA MOEDA (MOEDA 3D + SOMBRA SEPARADA INDEPENDENTE)
+           ==================================================================== -->
+      <div id="coin-interactive-group" class="coin-interactive-group">
+        
+        <!-- Sombra Separada: Movimentada exclusivamente por transform e opacity para fluidez máxima -->
+        <div id="coin-shadow" class="coin-shadow" aria-hidden="true"></div>
+
+        <!-- Botão Acessível da Moeda -->
+        <button id="coin-advance-btn" 
+                class="coin-button" 
+                type="button" 
+                aria-label="Avançar para a estrutura do projeto" 
+                title="Avançar para a estrutura do projeto (Clique ou Seta Direita)">
+          <div class="coin-3d-wrapper">
+            <!-- Anéis cilíndricos para dar volume e espessura física 3D à moeda -->
+            <div class="coin-edge-ring edge-base" aria-hidden="true"></div>
+            <div class="coin-edge-ring edge-3" aria-hidden="true"></div>
+            <div class="coin-edge-ring edge-2" aria-hidden="true"></div>
+            <div class="coin-edge-ring edge-1" aria-hidden="true"></div>
+
+            <!-- Face Frontal: R$ (Educação Financeira) -->
+            <div class="coin-face coin-face-front" aria-hidden="true">
+              <svg viewBox="0 0 110 110" class="coin-disc-svg">
+                <!-- Borda externa escura com respiro delicado -->
+                <circle cx="55" cy="55" r="51.5" fill="none" stroke="#173b34" stroke-width="2" />
+                <!-- Disco verde menta original #d5e8dc -->
+                <circle cx="55" cy="55" r="46.5" fill="#d5e8dc" />
+                <!-- Anel interno tracejado clássico -->
+                <circle cx="55" cy="55" r="41" fill="none" stroke="#173b34" stroke-width="1.2" stroke-dasharray="2.5,2" />
+                <!-- Símbolo R$ em EB Garamond -->
+                <text x="55" y="66" font-family="'EB Garamond', 'Georgia', serif" font-size="34" font-weight="700" fill="#173b34" text-anchor="middle">R$</text>
+              </svg>
+            </div>
+
+            <!-- Face do Verso: Ampulheta Centralizada (sem texto, ocupando o espaço com respiro em todas as direções) -->
+            <div class="coin-face coin-face-back" aria-hidden="true">
+              <svg viewBox="0 0 110 110" class="coin-disc-svg">
+                <!-- Borda externa escura com respiro delicado -->
+                <circle cx="55" cy="55" r="51.5" fill="none" stroke="#173b34" stroke-width="2" />
+                <!-- Disco verde menta original #d5e8dc -->
+                <circle cx="55" cy="55" r="46.5" fill="#d5e8dc" />
+                <!-- Anel interno tracejado (r=41) -->
+                <circle cx="55" cy="55" r="41" fill="none" stroke="#173b34" stroke-width="1.2" stroke-dasharray="2.5,2" />
+                
+                <!-- Ampulheta da História centralizada em (55, 55) -->
+                <g class="hourglass-symbol-group">
+                  <!-- Placa superior -->
+                  <line x1="39" y1="23.5" x2="71" y2="23.5" stroke="#173b34" stroke-width="1.8" stroke-linecap="round" />
+                  <line x1="35" y1="27" x2="75" y2="27" stroke="#173b34" stroke-width="2.8" stroke-linecap="round" />
+                  
+                  <!-- Placa inferior -->
+                  <line x1="35" y1="83" x2="75" y2="83" stroke="#173b34" stroke-width="2.8" stroke-linecap="round" />
+                  <line x1="39" y1="86.5" x2="71" y2="86.5" stroke="#173b34" stroke-width="1.8" stroke-linecap="round" />
+                  
+                  <!-- Colunas / Hastes laterais -->
+                  <line x1="37" y1="27" x2="37" y2="83" stroke="#173b34" stroke-width="1.8" stroke-linecap="round" />
+                  <line x1="73" y1="27" x2="73" y2="83" stroke="#173b34" stroke-width="1.8" stroke-linecap="round" />
+                  <!-- Esferas decorativas nas pontas das colunas -->
+                  <circle cx="37" cy="23.5" r="1.8" fill="#173b34" />
+                  <circle cx="73" cy="23.5" r="1.8" fill="#173b34" />
+                  <circle cx="37" cy="86.5" r="1.8" fill="#173b34" />
+                  <circle cx="73" cy="86.5" r="1.8" fill="#173b34" />
+
+                  <!-- Bulbo de vidro (Curvas laterais elegantes) -->
+                  <path d="M 41 27 C 41 43, 51.5 50.5, 53 55 C 51.5 59.5, 41 67, 41 83" 
+                        stroke="#173b34" stroke-width="2.2" stroke-linecap="round" fill="none" />
+                  <path d="M 69 27 C 69 43, 58.5 50.5, 57 55 C 58.5 59.5, 69 67, 69 83" 
+                        stroke="#173b34" stroke-width="2.2" stroke-linecap="round" fill="none" />
+
+                  <!-- Areia na parte superior (escoando) -->
+                  <path d="M 44 42 Q 55 46 66 42" stroke="#173b34" stroke-width="1.5" fill="none" stroke-linecap="round" />
+                  <path d="M 46 47 C 48 51, 52 54, 55 54.5 C 58 54, 62 51, 64 47 Z" fill="#173b34" />
+
+                  <!-- Fio de areia caindo pelo gargalo -->
+                  <line x1="55" y1="55" x2="55" y2="72" stroke="#173b34" stroke-width="1.4" stroke-dasharray="1.8,1.4" stroke-linecap="round" />
+
+                  <!-- Monte de areia acumulada no bulbo inferior -->
+                  <path d="M 43 83 C 45 74, 52 70.5, 55 70.5 C 58 70.5, 65 74, 67 83 Z" fill="#173b34" />
+
+                  <!-- Brilhos sutis no vidro (luz ambiente) -->
+                  <path d="M 44 32 C 43 36, 46 41, 48 44" stroke="#ffffff" stroke-width="1.3" stroke-linecap="round" fill="none" opacity="0.85" />
+                  <path d="M 44 78 C 43 74, 46 69, 48 66" stroke="#ffffff" stroke-width="1.3" stroke-linecap="round" fill="none" opacity="0.85" />
+                </g>
+              </svg>
+            </div>
+          </div>
+        </button>
+      </div>
+
+      <!-- ==========================================
+           TELA 1: CAPA / ABERTURA
+           ========================================== -->
+      <section id="slide-1" class="slide active" aria-label="Tela 1 de 4: Abertura do projeto" role="tabpanel">
+        
+        <!-- Faixa superior institucional -->
+        <header class="slide-header">
+          <div class="header-left">
+            <span class="badge-tag dark-badge">PROJETO DE EXTENSÃO</span>
+          </div>
+          <div class="header-line" aria-hidden="true"></div>
+          <div class="header-corner-block" aria-hidden="true"></div>
+        </header>
+
+        <!-- Elementos decorativos de fundo do slide 1 -->
+        <div class="slide1-decorations" aria-hidden="true">
+          <span class="cross-mark cross-1">+</span>
+          <div class="dotted-guide-line"></div>
+          <span class="cross-mark cross-2">+</span>
+        </div>
+
+        <!-- Conteúdo Principal da Capa -->
+        <div class="slide-content slide1-layout">
+          
+          <!-- Faixa bege de identificação de categoria -->
+          <div class="tag-category">HISTÓRIA + EDUCAÇÃO FINANCEIRA</div>
+
+          <!-- Bloco do Título com Hierarquia Fiel ao Original -->
+          <div class="title-block">
+            <h1 class="main-title">
+              <span class="title-line title-line-top">Consumo e</span>
+              <span class="title-line highlight-wrapper" id="title-endividamento-wrapper">
+                <span class="highlight-ink" id="highlight-endividamento-ink" aria-hidden="true"></span>
+                <span class="highlight-text title-line-huge">endividamento:</span>
+              </span>
+              <span class="title-line title-line-bottom">duas faces de uma mesma moeda?</span>
+            </h1>
+            <div class="terracotta-divider" aria-hidden="true"></div>
+            <p class="subtitle">Da Revolução Industrial às decisões de consumo de hoje.</p>
+          </div>
+
+          <!-- Três recortes conectados da parte inferior -->
+          <div class="cards-flow-row" aria-label="Percurso histórico do consumo em três momentos">
+            
+            <!-- Recorte 1: Revolução Industrial -->
+            <article class="paper-card card-kraft" tabindex="0" role="region" aria-label="Recorte histórico 1: Revolução Industrial, Século XVIII a XIX">
+              <div class="tape-strip" aria-hidden="true"></div>
+              <div class="card-kraft-top-bar" aria-hidden="true"></div>
+              <header class="card-meta">
+                <span class="card-epoch">01 &nbsp;•&nbsp; SÉC. XVIII–XIX</span>
+              </header>
+              <div class="card-divider-line" aria-hidden="true"></div>
+              
+              <!-- Ilustração SVG: Fábrica industrial harmonizada em contorno e preenchimento -->
+              <div class="card-illustration factory-ill">
+                <svg viewBox="0 0 280 120" class="ill-svg" role="img" aria-label="Ilustração de fábrica da Revolução Industrial">
+                  <!-- Linhas sutis de fumaça das chaminés (reação ao passar o mouse) -->
+                  <g class="factory-smoke-group" aria-hidden="true">
+                    <path class="smoke-line smoke-1" d="M 57 4 C 53 -4, 62 -10, 56 -18 C 53 -22, 58 -26, 61 -28" 
+                          stroke="#8c5a36" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0" />
+                    <path class="smoke-line smoke-2" d="M 63 4 C 67 -2, 63 -8, 68 -14" 
+                          stroke="#a37254" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0" />
+                    <path class="smoke-line smoke-3" d="M 183 -1 C 178 -9, 189 -15, 182 -23 C 179 -27, 185 -31, 188 -34" 
+                          stroke="#8c5a36" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0" />
+                    <path class="smoke-line smoke-4" d="M 189 -1 C 193 -7, 187 -13, 192 -20" 
+                          stroke="#a37254" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0" />
+                  </g>
+
+                  <!-- Chaminé 1 (esquerda) -->
+                  <rect x="46" y="10" width="26" height="50" fill="#b37a58" stroke="#7d4e33" stroke-width="2.4" stroke-linejoin="round" />
+                  <line x1="42" y1="9" x2="76" y2="9" stroke="#7d4e33" stroke-width="3.2" stroke-linecap="round" />
+                  <!-- Chaminé 2 (centro-direita, mais alta) -->
+                  <rect x="170" y="4" width="30" height="56" fill="#b37a58" stroke="#7d4e33" stroke-width="2.4" stroke-linejoin="round" />
+                  <line x1="166" y1="3" x2="204" y2="3" stroke="#7d4e33" stroke-width="3.2" stroke-linecap="round" />
+                  <!-- Galpão industrial com 4 dentes de serra shed -->
+                  <polygon points="10,65 52,38 52,65 107,38 107,65 162,38 162,65 217,38 217,65 272,38 272,116 10,116" fill="#9c684a" stroke="#7d4e33" stroke-width="2.4" stroke-linejoin="round" />
+                  <!-- Linha de base firme -->
+                  <line x1="4" y1="116" x2="278" y2="116" stroke="#7d4e33" stroke-width="2.5" stroke-linecap="round" />
+                  <!-- 5 Janelas creme com moldura sutil -->
+                  <rect x="25" y="77" width="22" height="26" rx="2" fill="#fbf8f0" stroke="#7d4e33" stroke-width="1.5" />
+                  <rect x="76" y="77" width="22" height="26" rx="2" fill="#fbf8f0" stroke="#7d4e33" stroke-width="1.5" />
+                  <rect x="128" y="77" width="22" height="26" rx="2" fill="#fbf8f0" stroke="#7d4e33" stroke-width="1.5" />
+                  <rect x="180" y="77" width="22" height="26" rx="2" fill="#fbf8f0" stroke="#7d4e33" stroke-width="1.5" />
+                  <rect x="230" y="77" width="22" height="26" rx="2" fill="#fbf8f0" stroke="#7d4e33" stroke-width="1.5" />
+                </svg>
+              </div>
+
+              <footer class="card-footer-label label-kraft-left">
+                REVOLUÇÃO INDUSTRIAL
+              </footer>
+            </article>
+
+            <!-- Seta de Conexão 1 (animada na abertura da capa) -->
+            <div class="flow-arrow flow-arrow-1" aria-hidden="true">
+              <svg viewBox="0 0 28 16" width="28" height="16">
+                <path class="arrow-path arrow-path-1" d="M2 8 L22 8 M16 2 L24 8 L16 14" stroke="#173b34" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              </svg>
+            </div>
+
+            <!-- Recorte 2: Crise de 1929 -->
+            <article class="paper-card card-white" tabindex="0" role="region" aria-label="Recorte histórico 2: Crise de 1929, Crise Econômica">
+              <div class="paper-layer-back" aria-hidden="true"></div>
+              <div class="tape-strip tape-right" aria-hidden="true"></div>
+              <header class="card-meta">
+                <span class="card-epoch text-terracotta">EXTRA / 1929</span>
+              </header>
+              <div class="card-divider-line" aria-hidden="true"></div>
+              
+              <h2 class="card-headline-serif">CRISE ECONÔMICA</h2>
+
+              <!-- Ilustração SVG: Gráfico de crash de 1929 harmonizado com traço consistente -->
+              <div class="card-illustration chart-ill">
+                <svg viewBox="0 0 320 98" class="ill-svg" role="img" aria-label="Gráfico em queda da Crise de 1929">
+                  <!-- Linha guia pontilhada discreta de jornal -->
+                  <line x1="10" y1="42" x2="310" y2="42" stroke="#e4ddd0" stroke-width="1.2" stroke-dasharray="3,3" />
+                  <!-- Linha de base firme -->
+                  <line x1="10" y1="84" x2="310" y2="84" stroke="#d5cbbd" stroke-width="1.8" stroke-linecap="round" />
+                  <!-- Gráfico da bolsa com queda real e pico de euforia (animado ao passar o mouse) -->
+                  <polyline class="chart-crash-line"
+                            points="10,30 55,40 90,8 132,42 172,40 216,78 256,90 305,98" 
+                            fill="none" stroke="#c66e4e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+
+              <footer class="card-footer-label label-center label-muted">
+                EMPREGO &nbsp;/&nbsp; RENDA &nbsp;/&nbsp; CONSUMO
+              </footer>
+            </article>
+
+            <!-- Seta de Conexão 2 (animada na abertura da capa) -->
+            <div class="flow-arrow flow-arrow-2" aria-hidden="true">
+              <svg viewBox="0 0 28 16" width="28" height="16">
+                <path class="arrow-path arrow-path-2" d="M2 8 L22 8 M16 2 L24 8 L16 14" stroke="#173b34" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              </svg>
+            </div>
+
+            <!-- Recorte 3: Consumo Digital -->
+            <article class="paper-card card-mint" tabindex="0" role="region" aria-label="Recorte histórico 3: Século XXI, Consumo Digital">
+              <div class="card-top-accent-bar" aria-hidden="true"></div>
+              <div class="tape-strip tape-right" aria-hidden="true"></div>
+              <header class="card-meta">
+                <span class="card-epoch text-teal">03 &nbsp;•&nbsp; SÉC. XXI</span>
+              </header>
+
+              <!-- Ilustração SVG: Celular e Cartão harmonizados com o acabamento vetorial do Slide 2 -->
+              <div class="card-illustration digital-ill">
+                <svg viewBox="0 0 300 135" class="ill-svg" role="img" aria-label="Smartphone e cartão de crédito simbolizando o consumo digital">
+                  <!-- Celular branco com alto-falante, tela amarela emoldurada, botão COMPRAR e barra inferior -->
+                  <rect x="16" y="8" width="68" height="112" rx="11" fill="#ffffff" stroke="#173b34" stroke-width="2.6" />
+                  <line x1="39" y1="16.5" x2="61" y2="16.5" stroke="#173b34" stroke-width="2.4" stroke-linecap="round" />
+                  <rect x="25" y="27" width="50" height="42" rx="5" fill="#f4cd4e" stroke="#173b34" stroke-width="1.5" />
+                  
+                  <!-- Botão COMPRAR do celular com destaque de pulso no hover -->
+                  <g class="btn-comprar-group" id="btn-comprar">
+                    <rect class="btn-comprar-bg" x="23" y="79" width="54" height="21" rx="4.5" fill="#f5eedc" stroke="#173b34" stroke-width="1.6" />
+                    <text class="btn-comprar-text" x="50" y="92.8" font-family="'Inter', sans-serif" font-size="8.5" font-weight="800" fill="#173b34" text-anchor="middle" letter-spacing="0.5px">COMPRAR</text>
+                  </g>
+                  <line x1="39" y1="111" x2="61" y2="111" stroke="#173b34" stroke-width="2.2" stroke-linecap="round" opacity="0.45" />
+
+                  <!-- Cartão de crédito inclinado ~ +6 graus com contorno harmonizado de 2.5px -->
+                  <g transform="translate(102, 20) rotate(6)">
+                    <rect x="0" y="0" width="166" height="96" rx="8" fill="#0b6b61" stroke="#173b34" stroke-width="2.5" />
+                    <rect x="10" y="13" width="146" height="15" rx="3" fill="#f4cd4e" />
+                    <text x="16" y="68" font-family="'Inter', sans-serif" font-size="16" font-weight="800" fill="#ffffff" letter-spacing="2">R$ •••</text>
+                  </g>
+                </svg>
+              </div>
+
+              <footer class="card-footer-label label-center label-teal">
+                CONSUMO DIGITAL
+              </footer>
+            </article>
+
+          </div>
+        </div>
+
+        <!-- Rodapé do Slide 1 -->
+        <footer class="slide-footer">
+          <span class="footer-center-tag">HISTÓRIA DO CONSUMO &nbsp;·&nbsp; PASSADO E PRESENTE</span>
+        </footer>
+      </section>
+
+
+      <!-- ==========================================
+           TELA 2: ESTRUTURA DO PROJETO
+           ========================================== -->
+      <section id="slide-2" class="slide" aria-label="Tela 2 de 4: Estrutura do projeto" role="tabpanel">
+        
+        <!-- Faixa superior institucional -->
+        <header class="slide-header">
+          <div class="header-left">
+            <span class="badge-tag dark-badge">PROJETO DE EXTENSÃO</span>
+            <div class="header-line" aria-hidden="true"></div>
+          </div>
+          <div class="header-corner-block" aria-hidden="true"></div>
+        </header>
+
+        <!-- Conteúdo Principal do Slide 2 -->
+        <div class="slide-content slide2-layout">
+          
+          <!-- Cabeçalho do Slide 2 -->
+          <div class="slide2-title-row">
+            <div class="slide2-title-left">
+              <div class="badge-number-kraft" aria-hidden="true">02</div>
+              <div class="slide2-title-group">
+                <h1 class="slide2-heading">
+                  <span class="underline-accent">O que é</span> e como funciona?
+                </h1>
+                <p class="subtitle">Uma sequência de oito aulas que liga o passado às decisões financeiras atuais.</p>
+              </div>
+            </div>
+            <div class="badge-tag mint-pill">8º ANO &nbsp;•&nbsp; HISTÓRIA &nbsp;•&nbsp; 8 AULAS</div>
+          </div>
+
+          <!-- As 4 Colunas das Aulas -->
+          <div class="columns-grid" aria-label="Organização das oito aulas do projeto">
+
+            <!-- Moedinha decorativa que percorre as 4 etapas na entrada do Slide 2 (~2s) -->
+            <div class="slide2-step-coin" aria-hidden="true">
+              <svg viewBox="0 0 32 32" width="26" height="26" class="step-coin-svg">
+                <circle cx="16" cy="16" r="14.5" fill="#f4cd4e" stroke="#173b34" stroke-width="1.8" />
+                <circle cx="16" cy="16" r="11.5" fill="none" stroke="#173b34" stroke-width="1" stroke-dasharray="2,1.5" />
+                <text x="16" y="20.5" font-family="'EB Garamond', 'Georgia', serif" font-size="13" font-weight="700" fill="#173b34" text-anchor="middle">R$</text>
+              </svg>
+            </div>
+            
+            <!-- Coluna 1: Aula 01 -->
+            <article class="column-card card-col-1" tabindex="0" role="button" aria-pressed="false" aria-label="Aula 01: Ponto de partida. Pressione Enter ou Espaço para destacar.">
+              <div class="tape-strip" aria-hidden="true"></div>
+              <div class="col-top-bar col-bar-brown" aria-hidden="true"></div>
+              <svg class="card-pen-outline" viewBox="0 0 300 384" preserveAspectRatio="none" aria-hidden="true">
+                <rect class="pen-outline-rect" x="1.2" y="1.2" width="297.6" height="381.6" rx="3.5" ry="3.5" pathLength="1000" />
+              </svg>
+              <div class="paper-corner-fold" aria-hidden="true">
+                <svg viewBox="0 0 32 32" width="30" height="30" class="corner-fold-svg">
+                  <polygon class="fold-under-bg" points="32,6 32,32 6,32" />
+                  <polygon class="fold-under-shadow" points="32,6 32,16 16,32 6,32" />
+                  <polygon class="fold-flap-shadow" points="6,32 32,6 3,3" />
+                  <path class="fold-flap" d="M 6 32 L 32 6 L 7 7 Q 6 19 6 32 Z" />
+                </svg>
+              </div>
+              <header class="col-header">
+                <div class="col-session-num">AULA 01</div>
+                <div class="col-session-title">PONTO DE PARTIDA</div>
+              </header>
+
+              <!-- Ilustração SVG: Moeda de Pagamento a Prazo (+10% presença e harmonizada) -->
+              <div class="col-illustration">
+                <svg viewBox="0 0 180 100" class="col-svg" role="img" aria-label="Moeda de pagamento a prazo">
+                  <circle cx="90" cy="41" r="39.5" fill="#fbf6eb" stroke="#865436" stroke-width="2.4" />
+                  <circle cx="90" cy="41" r="33" fill="none" stroke="#865436" stroke-width="1.2" stroke-dasharray="3,2.5" opacity="0.55" />
+                  <text x="90" y="52" font-family="'EB Garamond', serif" font-size="31" font-weight="700" fill="#865436" text-anchor="middle">R$</text>
+                  <line x1="26" y1="90" x2="154" y2="90" stroke="#865436" stroke-width="2.4" stroke-linecap="round" />
+                </svg>
+                <div class="col-ill-caption">PAGAMENTO &nbsp;/&nbsp; PRAZO</div>
+              </div>
+
+              <div class="col-body">
+                <h2 class="col-action-title">Entender o problema</h2>
+                <p class="col-description">Apresentação da situação-problema e<br>levantamento das concepções prévias.</p>
+              </div>
+            </article>
+
+            <!-- Conector entre Coluna 1 e 2: Seta horizontal fina em verde escuro -->
+            <div class="col-connector col-connector-1" aria-hidden="true">
+              <svg viewBox="0 0 24 16" width="22" height="15" class="connector-arrow-svg">
+                <path class="connector-line" d="M 2.5 8 L 20.5 8 M 14.5 2.8 L 20.5 8 L 14.5 13.2" pathLength="46" stroke="#173b34" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+              </svg>
+            </div>
+
+            <!-- Coluna 2: Aulas 02–04 -->
+            <article class="column-card card-col-2" tabindex="0" role="button" aria-pressed="false" aria-label="Aulas 02 a 04: Passado. Pressione Enter ou Espaço para destacar.">
+              <div class="tape-strip" aria-hidden="true"></div>
+              <div class="col-top-bar col-bar-terracotta" aria-hidden="true"></div>
+              <svg class="card-pen-outline" viewBox="0 0 300 384" preserveAspectRatio="none" aria-hidden="true">
+                <rect class="pen-outline-rect" x="1.2" y="1.2" width="297.6" height="381.6" rx="3.5" ry="3.5" pathLength="1000" />
+              </svg>
+              <div class="paper-corner-fold" aria-hidden="true">
+                <svg viewBox="0 0 32 32" width="30" height="30" class="corner-fold-svg">
+                  <polygon class="fold-under-bg" points="32,6 32,32 6,32" />
+                  <polygon class="fold-under-shadow" points="32,6 32,16 16,32 6,32" />
+                  <polygon class="fold-flap-shadow" points="6,32 32,6 3,3" />
+                  <path class="fold-flap" d="M 6 32 L 32 6 L 7 7 Q 6 19 6 32 Z" />
+                </svg>
+              </div>
+              <header class="col-header">
+                <div class="col-session-num">AULAS 02–04</div>
+                <div class="col-session-title">PASSADO</div>
+              </header>
+
+              <!-- Ilustração SVG: Fábrica + Jornal Crise 1929 harmonizados em contorno e preenchimento -->
+              <div class="col-illustration">
+                <svg viewBox="0 0 180 100" class="col-svg" role="img" aria-label="Fábrica da industrialização e gráfico da crise de 1929">
+                  <!-- Fábrica à esquerda com contorno e preenchimento equilibrados -->
+                  <g transform="translate(6, 12)">
+                    <rect x="13" y="4" width="11" height="24" fill="#e59a7e" stroke="#c66e4e" stroke-width="2.2" stroke-linejoin="round" />
+                    <line x1="11" y1="4" x2="26" y2="4" stroke="#c66e4e" stroke-width="2.4" stroke-linecap="round" />
+                    <rect x="44" y="0" width="12" height="28" fill="#e59a7e" stroke="#c66e4e" stroke-width="2.2" stroke-linejoin="round" />
+                    <line x1="42" y1="0" x2="58" y2="0" stroke="#c66e4e" stroke-width="2.4" stroke-linecap="round" />
+                    <polygon points="2,30 18,16 18,30 35,16 35,30 52,16 52,30 68,16 68,70 2,70" fill="#c66e4e" stroke="#c66e4e" stroke-width="2.2" stroke-linejoin="round" />
+                    <rect x="10" y="45" width="11" height="15" rx="1.2" fill="#fffdf6" />
+                    <rect x="29.5" y="45" width="11" height="15" rx="1.2" fill="#fffdf6" />
+                    <rect x="49" y="45" width="11" height="15" rx="1.2" fill="#fffdf6" />
+                  </g>
+                  
+                  <!-- Jornal Crise de 1929 à direita com contorno 2.3px e cabeçalho suave -->
+                  <g transform="translate(86, 10)">
+                    <rect x="0" y="0" width="88" height="72" rx="4" fill="#fbf6ee" stroke="#c66e4e" stroke-width="2.3" />
+                    <path d="M 1.2 4 Q 1.2 1.2 4 1.2 L 84 1.2 Q 86.8 1.2 86.8 4 L 86.8 19 L 1.2 19 Z" fill="#f5e3da" />
+                    <text x="44" y="13.5" font-family="'Inter', sans-serif" font-size="8.8" font-weight="800" fill="#c66e4e" text-anchor="middle" letter-spacing="0.3px">EXTRA / 1929</text>
+                    <line x1="1" y1="19" x2="87" y2="19" stroke="#c66e4e" stroke-width="1.8" />
+                    <polyline points="9,47 25,30 38,38 53,23 65,45 80,53" fill="none" stroke="#c66e4e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+                    <line x1="8" y1="62" x2="80" y2="62" stroke="#dccfc2" stroke-width="1.5" stroke-linecap="round" />
+                  </g>
+                </svg>
+                <div class="col-ill-caption">SÉC. XIX &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1929</div>
+              </div>
+
+              <div class="col-body">
+                <h2 class="col-action-title">Compreender as raízes</h2>
+                <p class="col-description">Contexto histórico do consumo e a<br>emergência do crédito moderno.</p>
+              </div>
+            </article>
+
+            <!-- Conector entre Coluna 2 e 3: Seta horizontal fina em verde escuro -->
+            <div class="col-connector col-connector-2" aria-hidden="true">
+              <svg viewBox="0 0 24 16" width="22" height="15" class="connector-arrow-svg">
+                <path class="connector-line" d="M 2.5 8 L 20.5 8 M 14.5 2.8 L 20.5 8 L 14.5 13.2" pathLength="46" stroke="#173b34" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+              </svg>
+            </div>
+
+            <!-- Coluna 3: Aulas 05–06 -->
+            <article class="column-card card-col-3" tabindex="0" role="button" aria-pressed="false" aria-label="Aulas 05 e 06: Prática. Pressione Enter ou Espaço para destacar.">
+              <div class="tape-strip" aria-hidden="true"></div>
+              <div class="col-top-bar col-bar-teal" aria-hidden="true"></div>
+              <svg class="card-pen-outline" viewBox="0 0 300 384" preserveAspectRatio="none" aria-hidden="true">
+                <rect class="pen-outline-rect" x="1.2" y="1.2" width="297.6" height="381.6" rx="3.5" ry="3.5" pathLength="1000" />
+              </svg>
+              <div class="paper-corner-fold" aria-hidden="true">
+                <svg viewBox="0 0 32 32" width="30" height="30" class="corner-fold-svg">
+                  <polygon class="fold-under-bg" points="32,6 32,32 6,32" />
+                  <polygon class="fold-under-shadow" points="32,6 32,16 16,32 6,32" />
+                  <polygon class="fold-flap-shadow" points="6,32 32,6 3,3" />
+                  <path class="fold-flap" d="M 6 32 L 32 6 L 7 7 Q 6 19 6 32 Z" />
+                </svg>
+              </div>
+              <header class="col-header">
+                <div class="col-session-num text-teal">AULAS 05–06</div>
+                <div class="col-session-title text-teal">PRÁTICA</div>
+              </header>
+
+              <!-- Ilustração SVG: Dois Dados harmonizados com traço 2.4px e detalhe interno sutil -->
+              <div class="col-illustration">
+                <svg viewBox="0 0 180 100" class="col-svg" role="img" aria-label="Dados do jogo pedagógico de tabuleiro">
+                  <!-- Dado 1 (inclinado à esquerda ~-8°, 1 ponto central) -->
+                  <g transform="translate(24, 15) rotate(-8)">
+                    <rect x="2" y="3" width="55" height="55" rx="10" fill="rgba(4, 126, 123, 0.14)" />
+                    <rect x="0" y="0" width="55" height="55" rx="10" fill="#fbfdfc" stroke="#047e7b" stroke-width="2.4" />
+                    <rect x="4.5" y="4.5" width="46" height="46" rx="7" fill="none" stroke="#047e7b" stroke-width="0.9" opacity="0.28" />
+                    <circle cx="27.5" cy="27.5" r="5.8" fill="#047e7b" />
+                  </g>
+                  <!-- Dado 2 (inclinado à direita ~+12°, 3 pontos diagonais) -->
+                  <g transform="translate(101, 22) rotate(12)">
+                    <rect x="2" y="3" width="50" height="50" rx="9" fill="rgba(4, 126, 123, 0.14)" />
+                    <rect x="0" y="0" width="50" height="50" rx="9" fill="#fbfdfc" stroke="#047e7b" stroke-width="2.4" />
+                    <rect x="4" y="4" width="42" height="42" rx="6.5" fill="none" stroke="#047e7b" stroke-width="0.9" opacity="0.28" />
+                    <circle cx="13" cy="13" r="3.6" fill="#047e7b" />
+                    <circle cx="25" cy="25" r="3.6" fill="#047e7b" />
+                    <circle cx="37" cy="37" r="3.6" fill="#047e7b" />
+                  </g>
+                </svg>
+                <div class="col-ill-caption">DECIDIR &nbsp;•&nbsp; POUPAR</div>
+              </div>
+
+              <div class="col-body">
+                <h2 class="col-action-title">Experimentar escolhas</h2>
+                <p class="col-description">Jogo de tomada de decisões financeiras<br>em diferentes cenários históricos.</p>
+              </div>
+            </article>
+
+            <!-- Conector entre Coluna 3 e 4: Seta horizontal fina em verde escuro -->
+            <div class="col-connector col-connector-3" aria-hidden="true">
+              <svg viewBox="0 0 24 16" width="22" height="15" class="connector-arrow-svg">
+                <path class="connector-line" d="M 2.5 8 L 20.5 8 M 14.5 2.8 L 20.5 8 L 14.5 13.2" pathLength="46" stroke="#173b34" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+              </svg>
+            </div>
+
+            <!-- Coluna 4: Aulas 07–08 -->
+            <article class="column-card card-col-4" tabindex="0" role="button" aria-pressed="false" aria-label="Aulas 07 e 08: Presente. Pressione Enter ou Espaço para destacar.">
+              <div class="tape-strip" aria-hidden="true"></div>
+              <div class="col-top-bar col-bar-gold" aria-hidden="true"></div>
+              <svg class="card-pen-outline" viewBox="0 0 300 384" preserveAspectRatio="none" aria-hidden="true">
+                <rect class="pen-outline-rect" x="1.2" y="1.2" width="297.6" height="381.6" rx="3.5" ry="3.5" pathLength="1000" />
+              </svg>
+              <div class="paper-corner-fold" aria-hidden="true">
+                <svg viewBox="0 0 32 32" width="30" height="30" class="corner-fold-svg">
+                  <polygon class="fold-under-bg" points="32,6 32,32 6,32" />
+                  <polygon class="fold-under-shadow" points="32,6 32,16 16,32 6,32" />
+                  <polygon class="fold-flap-shadow" points="6,32 32,6 3,3" />
+                  <path class="fold-flap" d="M 6 32 L 32 6 L 7 7 Q 6 19 6 32 Z" />
+                </svg>
+              </div>
+              <header class="col-header">
+                <div class="col-session-num text-mustard">AULAS 07–08</div>
+                <div class="col-session-title">PRESENTE</div>
+              </header>
+
+              <!-- Ilustração SVG: Celular com "PAGAR", pequena nota musical (paródias educativas) e cartão inclinado -->
+              <div class="col-illustration">
+                <svg viewBox="0 0 180 100" class="col-svg" role="img" aria-label="Pagamento digital por celular, cartão e nota musical representando paródias educativas">
+                  <!-- Pequena nota musical discreta próxima ao celular (paródias educativas) -->
+                  <g transform="translate(8, 13) rotate(-8)" aria-hidden="true">
+                    <ellipse cx="5.5" cy="17.5" rx="4.2" ry="3.1" transform="rotate(-18 5.5 17.5)" fill="#173b34" />
+                    <path d="M 8.8 16.5 L 8.8 2.5 C 12.5 3.8, 15.2 6.8, 14.2 11.2" fill="none" stroke="#173b34" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" />
+                  </g>
+                  <!-- Celular branco com alto-falante, tela amarela PAGAR e barra inferior -->
+                  <g transform="translate(27, 6)">
+                    <rect x="0" y="0" width="52" height="78" rx="9" fill="#ffffff" stroke="#173b34" stroke-width="2.4" />
+                    <line x1="20" y1="6.5" x2="32" y2="6.5" stroke="#173b34" stroke-width="2.2" stroke-linecap="round" />
+                    <rect x="7.5" y="17" width="37" height="23" rx="4" fill="#f4cd4e" stroke="#173b34" stroke-width="1.2" />
+                    <text x="26" y="32" font-family="'Inter', sans-serif" font-size="9" font-weight="800" fill="#173b34" text-anchor="middle">PAGAR</text>
+                    <line x1="19" y1="70" x2="33" y2="70" stroke="#173b34" stroke-width="2" stroke-linecap="round" opacity="0.45" />
+                  </g>
+                  <!-- Cartão inclinado a +6° com contorno harmonizado, tarja amarela e R$ ••• -->
+                  <g transform="translate(91, 26) rotate(6)">
+                    <rect x="0" y="0" width="70" height="44" rx="5" fill="#0b6b61" stroke="#173b34" stroke-width="2.2" />
+                    <rect x="5" y="7" width="60" height="7.5" rx="1.8" fill="#f4cd4e" />
+                    <text x="8" y="32" font-family="'Inter', sans-serif" font-size="9.5" font-weight="800" fill="#ffffff">R$ •••</text>
+                  </g>
+                </svg>
+                <div class="col-ill-caption">SÉC. XXI</div>
+              </div>
+
+              <div class="col-body">
+                <h2 class="col-action-title">Compartilhar e avaliar</h2>
+                <p class="col-description">Globalização, consumo digital e<br>paródias educativas.</p>
+              </div>
+            </article>
+
+          </div>
+
+          <!-- Banner Inferior com Definições Conceituais Interativas -->
+          <footer class="concept-banner" role="region" aria-label="Diferença importante entre endividamento e inadimplência">
+            <div class="concept-col-badge">
+              <span class="concept-badge-text">UMA DIFERENÇA IMPORTANTE</span>
+            </div>
+            
+            <div class="concept-divider" aria-hidden="true"></div>
+
+            <div class="concept-col" id="concept-endividamento" tabindex="0" role="button" aria-pressed="false" aria-label="Endividamento: clique ou pressione Enter para alternar exemplo prático">
+              <div class="concept-header-row">
+                <svg class="concept-icon" viewBox="0 0 22 22" width="20" height="20" aria-hidden="true">
+                  <rect x="3.5" y="2.5" width="15" height="17" rx="2" fill="rgba(255, 255, 255, 0.06)" stroke="#f7d97e" stroke-width="1.5" />
+                  <circle cx="7" cy="7.5" r="1" fill="#f7d97e" />
+                  <line x1="10" y1="7.5" x2="15.5" y2="7.5" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round" />
+                  <circle cx="7" cy="11.5" r="1" fill="#f7d97e" />
+                  <line x1="10" y1="11.5" x2="15.5" y2="11.5" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round" />
+                  <circle cx="7" cy="15.5" r="1" fill="#f7d97e" />
+                  <line x1="10" y1="15.5" x2="14" y2="15.5" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round" />
+                </svg>
+                <h3 class="concept-term">Endividamento</h3>
+              </div>
+              <div class="concept-def-stage">
+                <p class="concept-def concept-def-initial" aria-hidden="false">Ter dívidas, <span class="highlight-yellow-soft">mesmo em dia</span>.</p>
+                <p class="concept-def concept-def-alt" aria-hidden="true">Compra parcelada, com as parcelas em dia.</p>
+              </div>
+            </div>
+
+            <div class="concept-divider" aria-hidden="true"></div>
+
+            <div class="concept-col" id="concept-inadimplencia" tabindex="0" role="button" aria-pressed="false" aria-label="Inadimplência: clique ou pressione Enter para alternar exemplo prático">
+              <div class="concept-header-row">
+                <svg class="concept-icon" viewBox="0 0 22 22" width="20" height="20" aria-hidden="true">
+                  <path d="M 11.2 18 H 4.5 A 1.8 1.8 0 0 1 2.7 16.2 V 5.8 A 1.8 1.8 0 0 1 4.5 4 H 15.5 A 1.8 1.8 0 0 1 17.3 5.8 V 10.2" fill="rgba(255, 255, 255, 0.06)" stroke="#f5ad94" stroke-width="1.5" stroke-linecap="round" />
+                  <line x1="6.5" y1="2.2" x2="6.5" y2="5.2" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" />
+                  <line x1="13.5" y1="2.2" x2="13.5" y2="5.2" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" />
+                  <line x1="3" y1="8" x2="17" y2="8" stroke="#f5ad94" stroke-width="1.3" />
+                  <circle cx="15.8" cy="15.5" r="4.2" fill="#173b34" stroke="#f5ad94" stroke-width="1.5" />
+                  <polyline points="15.8,13.4 15.8,15.6 17.4,16.5" fill="none" stroke="#ffffff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <h3 class="concept-term">Inadimplência</h3>
+              </div>
+              <div class="concept-def-stage">
+                <p class="concept-def concept-def-initial" aria-hidden="false"><span class="highlight-terracotta-light">Não pagar no prazo</span>.</p>
+                <p class="concept-def concept-def-alt" aria-hidden="true">Uma parcela venceu e ainda não foi paga.</p>
+              </div>
+            </div>
+          </footer>
+
+        </div>
+
+        <!-- Rodapé do Slide 2 -->
+        <footer class="slide-footer slide2-footer">
+          <span class="footer-left-tag">02 &nbsp;/&nbsp; ESTRUTURA DO PROJETO</span>
+        </footer>
+      </section>
+
+
+      <!-- ==========================================
+           TELA 3: METODOLOGIA PEDAGÓGICA
+           ========================================== -->
+      <section id="slide-3" class="slide" aria-label="Tela 3 de 4: Metodologia pedagógica" role="tabpanel">
+        
+        <!-- Faixa superior institucional -->
+        <header class="slide-header">
+          <div class="header-left">
+            <span class="badge-tag dark-badge">PROJETO DE EXTENSÃO</span>
+            <div class="header-line" aria-hidden="true"></div>
+          </div>
+        </header>
+
+        <!-- Elementos decorativos de fundo do slide 3 -->
+        <div class="slide3-decorations" aria-hidden="true">
+          <span class="cross-mark cross-slide3">+</span>
+          <div class="header-corner-block" aria-hidden="true"></div>
+          <div class="protractor-watermark">
+            <svg viewBox="0 0 100 100" width="90" height="90">
+              <circle cx="50" cy="50" r="44" fill="none" stroke="rgba(22, 60, 51, 0.15)" stroke-width="1.2" />
+              <line x1="6" y1="50" x2="94" y2="50" stroke="rgba(22, 60, 51, 0.15)" stroke-width="1" />
+              <line x1="50" y1="6" x2="50" y2="94" stroke="rgba(22, 60, 51, 0.15)" stroke-width="1" />
+              <circle cx="50" cy="50" r="28" fill="none" stroke="rgba(22, 60, 51, 0.12)" stroke-width="0.8" stroke-dasharray="2,2" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Conteúdo Principal do Slide 3 -->
+        <div class="slide-content slide3-layout">
+          
+          <!-- Cabeçalho do Slide 3 -->
+          <div class="slide3-title-row">
+            <div class="badge-number-kraft" aria-hidden="true">03</div>
+            <div class="slide3-title-group">
+              <h1 class="slide3-heading">
+                <span class="underline-accent">Mais do que</span> ensinar a economizar
+              </h1>
+              <p class="subtitle">A aprendizagem combina contexto histórico, participação e reflexão crítica.</p>
+            </div>
+          </div>
+
+          <!-- Três Eixos Metodológicos (Cartões) -->
+          <div class="method-cards-grid" aria-label="Três eixos metodológicos: História, Experiência e Consciência">
+            
+            <!-- Eixo 1: História (Compreender) -->
+            <article class="method-card card-method-1" data-card="1" tabindex="0" role="button" aria-pressed="false" aria-label="Eixo 01 História: Compreender. Clique ou pressione Enter para destacar.">
+              <div class="paper-layer-back" aria-hidden="true"></div>
+              <div class="tape-strip" aria-hidden="true"></div>
+              <div class="col-top-bar col-bar-brown" aria-hidden="true"></div>
+              
+              <header class="method-card-header">
+                <span class="method-epoch-tag text-terracotta">01 &nbsp;/&nbsp; HISTÓRIA</span>
+              </header>
+
+              <!-- Ilustração SVG: Fábrica industrial e jornal histórico (Compreender) -->
+              <div class="method-illustration">
+                <svg viewBox="0 0 180 100" class="method-svg" role="img" aria-label="Fábrica da Revolução Industrial e notícia de jornal da Crise de 1929">
+                  <!-- Fumaça das chaminés (animada ao passar o mouse) -->
+                  <g class="method-smoke-group" aria-hidden="true">
+                    <path class="method-smoke method-smoke-1" d="M 31 18 C 28 12, 34 7, 30 0" stroke="#8d4f2b" stroke-width="1.7" stroke-linecap="round" fill="none" opacity="0" />
+                    <path class="method-smoke method-smoke-2" d="M 35 18 C 38 13, 34 9, 37 3" stroke="#a66843" stroke-width="1.3" stroke-linecap="round" fill="none" opacity="0" />
+                    <path class="method-smoke method-smoke-3" d="M 62.5 12 C 59.5 6, 65.5 1, 61.5 -5" stroke="#8d4f2b" stroke-width="1.7" stroke-linecap="round" fill="none" opacity="0" />
+                    <path class="method-smoke method-smoke-4" d="M 66.5 12 C 69.5 7, 65.5 3, 68.5 -2" stroke="#a66843" stroke-width="1.3" stroke-linecap="round" fill="none" opacity="0" />
+                  </g>
+
+                  <!-- Fábrica Histórica à esquerda -->
+                  <g class="method-factory-group">
+                    <!-- Chaminé 1 (esquerda) -->
+                    <rect x="25" y="21" width="12" height="26" fill="#b37a58" stroke="#8d4f2b" stroke-width="2.2" stroke-linejoin="round" />
+                    <line x1="23" y1="20.5" x2="39" y2="20.5" stroke="#8d4f2b" stroke-width="2.8" stroke-linecap="round" />
+                    <!-- Chaminé 2 (centro, mais alta) -->
+                    <rect x="56" y="15" width="13" height="32" fill="#b37a58" stroke="#8d4f2b" stroke-width="2.2" stroke-linejoin="round" />
+                    <line x1="54" y1="14.5" x2="71" y2="14.5" stroke="#8d4f2b" stroke-width="2.8" stroke-linecap="round" />
+                    <!-- Galpão com telhados shed -->
+                    <polygon points="12,47 29,33 29,47 47,33 47,47 65,33 65,47 83,33 83,86 12,86" fill="#a86844" stroke="#8d4f2b" stroke-width="2.2" stroke-linejoin="round" />
+                    <!-- Base sólida -->
+                    <line x1="8" y1="86" x2="87" y2="86" stroke="#8d4f2b" stroke-width="2.4" stroke-linecap="round" />
+                    <!-- 3 Janelas creme emolduradas -->
+                    <rect x="22" y="60" width="12" height="16" rx="1.5" fill="#fffdf6" stroke="#8d4f2b" stroke-width="1.4" />
+                    <rect x="42" y="60" width="12" height="16" rx="1.5" fill="#fffdf6" stroke="#8d4f2b" stroke-width="1.4" />
+                    <rect x="62" y="60" width="12" height="16" rx="1.5" fill="#fffdf6" stroke="#8d4f2b" stroke-width="1.4" />
+                  </g>
+
+                  <!-- Jornal Histórico à direita -->
+                  <g class="method-newspaper-group">
+                    <!-- Sombra / folha de fundo -->
+                    <rect x="94" y="17" width="76" height="69" rx="3.5" fill="#e2d6c4" opacity="0.65" />
+                    <!-- Folha principal de jornal envelhecido claro -->
+                    <rect x="91" y="14" width="76" height="69" rx="3.5" fill="#fdfbf7" stroke="#c66e4e" stroke-width="2.2" />
+                    <!-- Cabeçalho do jornal -->
+                    <path d="M 92.2 17.5 Q 92.2 15.2 94.5 15.2 L 163.5 15.2 Q 165.8 15.2 165.8 17.5 L 165.8 29.5 L 92.2 29.5 Z" fill="#f5e3da" />
+                    <line x1="91" y1="29.5" x2="167" y2="29.5" stroke="#c66e4e" stroke-width="1.8" />
+                    <text x="129" y="25" font-family="'Inter', sans-serif" font-size="8.5" font-weight="800" fill="#c66e4e" text-anchor="middle" letter-spacing="0.5px">EXTRA / 1929</text>
+                    <!-- Linha guia e gráfico da crise -->
+                    <line x1="98" y1="54" x2="160" y2="54" stroke="#eedcd3" stroke-width="1.2" stroke-dasharray="2.5,2.5" />
+                    <polyline points="98,43 111,37 121,48 133,35 144,58 153,64 160,70" fill="none" stroke="#c66e4e" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" />
+                    <!-- Linhas de texto simuladas -->
+                    <line x1="98" y1="75" x2="138" y2="75" stroke="#cbb9a8" stroke-width="1.6" stroke-linecap="round" />
+                    <line x1="143" y1="75" x2="160" y2="75" stroke="#cbb9a8" stroke-width="1.6" stroke-linecap="round" />
+                  </g>
+                </svg>
+              </div>
+
+              <div class="method-body">
+                <h2 class="method-action-title">Compreender</h2>
+                <p class="method-description">As <span class="method-ink-highlight">transformações da sociedade</span> também mudam a forma como consumimos.</p>
+              </div>
+
+              <!-- Anotação de estudo na base do card -->
+              <div class="card-study-note note-kraft" aria-label="Anotação de estudo: Contextualização histórica">
+                <span class="note-pin" aria-hidden="true"></span>
+                <span class="note-text">Contextualização histórica</span>
+              </div>
+            </article>
+
+            <!-- Eixo 2: Experiência (Participar) -->
+            <article class="method-card card-method-2" data-card="2" tabindex="0" role="button" aria-pressed="false" aria-label="Eixo 02 Experiência: Participar. Clique ou pressione Enter para destacar.">
+              <div class="paper-layer-back" aria-hidden="true"></div>
+              <div class="tape-strip" aria-hidden="true"></div>
+              <div class="col-top-bar col-bar-teal" aria-hidden="true"></div>
+              
+              <header class="method-card-header">
+                <span class="method-epoch-tag text-teal">02 &nbsp;/&nbsp; EXPERIÊNCIA</span>
+              </header>
+
+              <!-- Ilustração SVG: Dados e balões de diálogo (Participar) -->
+              <div class="method-illustration">
+                <svg viewBox="0 0 180 100" class="method-svg" role="img" aria-label="Dados de jogo pedagógico e balões de diálogo representando debates e participação">
+                  <!-- Dois pequenos balões de conversa ao fundo representando os debates -->
+                  <g class="method-bubbles-group" aria-hidden="true">
+                    <!-- Balão 1 (superior esquerdo) -->
+                    <path d="M 32 10 L 76 10 Q 86 10 86 20 L 86 34 Q 86 44 76 44 L 56 44 L 46 53 L 49 44 L 32 44 Q 22 44 22 34 L 22 20 Q 22 10 32 10 Z" fill="#e1efe8" stroke="#0f7166" stroke-width="1.8" stroke-linejoin="round" opacity="0.9" />
+                    <line x1="34" y1="23" x2="74" y2="23" stroke="#0f7166" stroke-width="2" stroke-linecap="round" opacity="0.55" />
+                    <line x1="34" y1="31" x2="62" y2="31" stroke="#0f7166" stroke-width="2" stroke-linecap="round" opacity="0.55" />
+
+                    <!-- Balão 2 (superior direito) -->
+                    <path d="M 112 12 L 150 12 Q 160 12 160 22 L 160 33 Q 160 43 150 43 L 140 43 L 134 50 L 135 43 L 112 43 Q 102 43 102 33 L 102 22 Q 102 12 112 12 Z" fill="#f4faf7" stroke="#0f7166" stroke-width="1.8" stroke-linejoin="round" opacity="0.9" />
+                    <circle cx="119" cy="27.5" r="2.2" fill="#0f7166" opacity="0.6" />
+                    <circle cx="131" cy="27.5" r="2.2" fill="#0f7166" opacity="0.6" />
+                    <circle cx="143" cy="27.5" r="2.2" fill="#0f7166" opacity="0.6" />
+                  </g>
+
+                  <!-- Dados em primeiro plano com rotação/acomodação suave no hover -->
+                  <g class="method-dice-pair">
+                    <!-- Dado 1 (inclinado à esquerda ~-8°, 1 ponto central) -->
+                    <g class="method-die-1">
+                      <g transform="translate(42, 33) rotate(-8)">
+                        <rect x="2" y="3" width="52" height="52" rx="9.5" fill="rgba(4, 126, 123, 0.16)" />
+                        <rect x="0" y="0" width="52" height="52" rx="9.5" fill="#fbfdfc" stroke="#047e7b" stroke-width="2.4" />
+                        <rect x="4.2" y="4.2" width="43.6" height="43.6" rx="6.5" fill="none" stroke="#047e7b" stroke-width="0.9" opacity="0.28" />
+                        <circle cx="26" cy="26" r="5.4" fill="#047e7b" />
+                      </g>
+                    </g>
+                    <!-- Dado 2 (inclinado à direita ~+12°, 3 pontos diagonais) -->
+                    <g class="method-die-2">
+                      <g transform="translate(86, 37) rotate(12)">
+                        <rect x="2" y="3" width="48" height="48" rx="8.5" fill="rgba(4, 126, 123, 0.16)" />
+                        <rect x="0" y="0" width="48" height="48" rx="8.5" fill="#ffffff" stroke="#047e7b" stroke-width="2.4" />
+                        <rect x="4" y="4" width="40" height="40" rx="6" fill="none" stroke="#047e7b" stroke-width="0.9" opacity="0.28" />
+                        <circle cx="13" cy="13" r="3.6" fill="#047e7b" />
+                        <circle cx="24" cy="24" r="3.6" fill="#047e7b" />
+                        <circle cx="35" cy="35" r="3.6" fill="#047e7b" />
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+
+              <div class="method-body">
+                <h2 class="method-action-title">Participar</h2>
+                <p class="method-description"><span class="method-ink-highlight">Debates, casos e jogos</span> aproximam os conceitos do cotidiano.</p>
+              </div>
+
+              <!-- Anotação de estudo na base do card -->
+              <div class="card-study-note note-mint" aria-label="Anotação de estudo: Debates • Casos • Jogos">
+                <span class="note-pin" aria-hidden="true"></span>
+                <span class="note-text">Debates &nbsp;•&nbsp; Casos &nbsp;•&nbsp; Jogos</span>
+              </div>
+            </article>
+
+            <!-- Eixo 3: Consciência (Refletir) -->
+            <article class="method-card card-method-3" data-card="3" tabindex="0" role="button" aria-pressed="false" aria-label="Eixo 03 Consciência: Refletir. Clique ou pressione Enter para destacar.">
+              <div class="paper-layer-back" aria-hidden="true"></div>
+              <div class="tape-strip" aria-hidden="true"></div>
+              <div class="col-top-bar col-bar-brown" aria-hidden="true"></div>
+              
+              <header class="method-card-header">
+                <span class="method-epoch-tag text-terracotta">03 &nbsp;/&nbsp; CONSCIÊNCIA</span>
+              </header>
+
+              <!-- Ilustração SVG: Lupa sobre folha de anotações com protagonismo ampliado (Refletir) -->
+              <div class="method-illustration">
+                <svg viewBox="0 0 180 100" class="method-svg method-svg-magnifier" role="img" aria-label="Lupa sobre folha de anotações com marcação amarela e ponto de interrogação">
+                  <!-- Bloco de anotações ao fundo (dupla camada com leve inclinação) -->
+                  <g class="method-paper-notes">
+                    <!-- Folha de trás (kraft/creme suave inclinada a -9°) -->
+                    <rect x="0" y="0" width="94" height="78" rx="4" fill="#ebe0cf" stroke="#cfc0ad" stroke-width="1.6" transform="translate(22, 12) rotate(-9)" opacity="0.8" />
+                    
+                    <!-- Folha principal (marfim pautada inclinada a -3°) -->
+                    <g transform="translate(30, 8) rotate(-3)">
+                      <!-- Sombra suave da folha -->
+                      <rect x="2" y="3" width="102" height="82" rx="4" fill="#dfd3bf" opacity="0.6" />
+                      <!-- Corpo do papel marfim -->
+                      <rect x="0" y="0" width="102" height="82" rx="4" fill="#fdfbf7" stroke="#d5c7b3" stroke-width="1.8" />
+                      <!-- Fita adesiva delicada no topo -->
+                      <rect x="36" y="-6" width="32" height="11" rx="1.5" fill="rgba(235, 226, 202, 0.78)" stroke="rgba(202, 192, 168, 0.45)" stroke-width="0.8" transform="rotate(2 52 -0.5)" />
+                      <!-- Marcação amarela tipo marca-texto -->
+                      <rect x="14" y="24" width="58" height="12" rx="2" fill="#f4cd4e" opacity="0.6" />
+                      <!-- Linhas pautadas de anotação -->
+                      <line x1="12" y1="18" x2="90" y2="18" stroke="#dfd5c4" stroke-width="1.4" stroke-linecap="round" />
+                      <line x1="12" y1="30" x2="82" y2="30" stroke="#8d4f2b" stroke-width="1.6" stroke-linecap="round" opacity="0.5" />
+                      <line x1="12" y1="42" x2="90" y2="42" stroke="#dfd5c4" stroke-width="1.4" stroke-linecap="round" />
+                      <line x1="12" y1="54" x2="74" y2="54" stroke="#dfd5c4" stroke-width="1.4" stroke-linecap="round" />
+                      <line x1="12" y1="66" x2="86" y2="66" stroke="#dfd5c4" stroke-width="1.4" stroke-linecap="round" />
+                    </g>
+                  </g>
+
+                  <!-- Lupa em primeiro plano com aumento proporcional (aro 28px, cabo robusto e ? marcante) -->
+                  <g class="method-magnifier-group">
+                    <!-- Cabo da lupa em verde-petróleo com virola e ponteira ouro -->
+                    <g class="magnifier-handle">
+                      <line x1="117" y1="67" x2="154" y2="100" stroke="#0f7166" stroke-width="5.6" stroke-linecap="round" />
+                      <rect x="113" y="63" width="7.5" height="7.5" rx="1.2" fill="#f0c65c" stroke="#8d4f2b" stroke-width="1.4" transform="rotate(45 116.7 66.7)" />
+                      <circle cx="154" cy="100" r="3.5" fill="#f0c65c" />
+                    </g>
+
+                    <!-- Aro da lente aumentado (círculo intrínseco do objeto lupa) -->
+                    <circle cx="96" cy="46" r="28.5" fill="rgba(255, 253, 247, 0.75)" stroke="#8d4f2b" stroke-width="2.8" />
+                    <circle cx="96" cy="46" r="24.2" fill="none" stroke="#d08234" stroke-width="1" opacity="0.38" />
+                    <!-- Brilho no vidro da lente -->
+                    <path d="M 77 33 C 83 25, 94 22, 105 23" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" opacity="0.9" />
+
+                    <!-- Ponto de interrogação central ampliado com excelente legibilidade -->
+                    <text class="method-question-mark" x="96" y="58" font-family="'EB Garamond', 'Georgia', serif" font-size="33" font-weight="700" fill="#8d4f2b" text-anchor="middle">?</text>
+                  </g>
+                </svg>
+              </div>
+
+              <div class="method-body">
+                <h2 class="method-action-title">Refletir</h2>
+                <p class="method-description">As decisões financeiras envolvem<br><span class="method-ink-highlight">escolhas e condições sociais</span>.</p>
+              </div>
+
+              <!-- Anotação de estudo na base do card -->
+              <div class="card-study-note note-cream" aria-label="Anotação de estudo: Escolhas • Condições sociais">
+                <span class="note-pin" aria-hidden="true"></span>
+                <span class="note-text">Escolhas &nbsp;•&nbsp; Condições sociais</span>
+              </div>
+            </article>
+
+          </div>
+
+          <!-- Faixa Inferior: O Percurso Pedagógico -->
+          <footer class="path-sequence-wrapper" role="region" aria-label="O percurso pedagógico em quatro etapas interativas">
+            <div class="path-title-tag">O PERCURSO PEDAGÓGICO</div>
+            
+            <div class="path-pills-row">
+              <div class="path-pill pill-step-1" data-step="1" data-target-card="1" tabindex="0" role="button" aria-pressed="false" aria-label="Etapa 01 Investigar: destacar card Compreender">
+                <span class="pill-num">01</span>
+                <span class="pill-label">INVESTIGAR</span>
+              </div>
+
+              <div class="path-connector-line path-conn-1" aria-hidden="true"></div>
+
+              <div class="path-pill pill-step-2" data-step="2" data-target-card="1" tabindex="0" role="button" aria-pressed="false" aria-label="Etapa 02 Contextualizar: destacar card Compreender">
+                <span class="pill-num">02</span>
+                <span class="pill-label">CONTEXTUALIZAR</span>
+              </div>
+
+              <div class="path-connector-line path-conn-2" aria-hidden="true"></div>
+
+              <div class="path-pill pill-step-3" data-step="3" data-target-card="2" tabindex="0" role="button" aria-pressed="false" aria-label="Etapa 03 Vivenciar: destacar card Participar">
+                <span class="pill-num">03</span>
+                <span class="pill-label">VIVENCIAR</span>
+              </div>
+
+              <div class="path-connector-line path-conn-3" aria-hidden="true"></div>
+
+              <div class="path-pill pill-step-4" data-step="4" data-target-card="3" tabindex="0" role="button" aria-pressed="false" aria-label="Etapa 04 Refletir: destacar card Refletir">
+                <span class="pill-num">04</span>
+                <span class="pill-label">REFLETIR</span>
+              </div>
+            </div>
+          </footer>
+
+        </div>
+
+        <!-- Rodapé do Slide 3 -->
+        <footer class="slide-footer slide3-footer">
+          <span class="footer-left-tag">03 &nbsp;/&nbsp; METODOLOGIA PEDAGÓGICA</span>
+        </footer>
+      </section>
+
+
+      <!-- ==========================================
+           TELA 4: APLICAÇÃO NAS ESCOLAS
+           ========================================== -->
+      <section id="slide-4" class="slide" aria-label="Tela 4 de 4: Da proposta à sala de aula" role="tabpanel">
+        
+        <!-- Elementos decorativos de fundo do slide 4 -->
+        <div class="slide4-decorations" aria-hidden="true">
+          <span class="cross-mark cross-slide4">+</span>
+          <div class="header-corner-block" aria-hidden="true"></div>
+        </div>
+
+        <!-- Conteúdo Principal do Slide 4 -->
+        <div class="slide-content slide4-layout">
+          
+          <!-- Faixa superior: PROJETO DE EXTENSÃO em linha própria com linha decorativa -->
+          <div class="slide4-top-meta">
+            <span class="badge-tag dark-badge">PROJETO DE EXTENSÃO</span>
+            <div class="header-line" aria-hidden="true"></div>
+          </div>
+
+          <!-- Cabeçalho do Slide 4: 04 alinhado ao título principal -->
+          <div class="slide4-title-row">
+            <div class="badge-number-kraft" aria-hidden="true">04</div>
+            <div class="slide4-title-group">
+              <h1 class="slide4-heading">
+                <span class="underline-accent">Da proposta</span> à sala de aula
+              </h1>
+              <p class="subtitle">Materiais prontos, mediação docente e adaptação à realidade de cada escola.</p>
+            </div>
+          </div>
+
+          <!-- Grid dos Dois Blocos Principais: Kit Pedagógico e Como Aplicar -->
+          <div class="application-grid" aria-label="Recursos do kit pedagógico e etapas de aplicação nas escolas">
+            
+            <!-- Bloco 1 (Esquerda): Kit Pedagógico (Anexos do Projeto 8.9) -->
+            <article class="kit-card">
+              <div class="paper-layer-back" aria-hidden="true"></div>
+              <div class="tape-strip tape-right" aria-hidden="true"></div>
+              
+              <header class="kit-card-header">
+                <span class="kit-section-tag">KIT PEDAGÓGICO</span>
+                <h2 class="kit-title">Anexos do Projeto 8.9</h2>
+              </header>
+
+              <!-- Ilustração SVG do Kit Pedagógico: Tabuleiro com trilha pontilhada, cartas com relevo e moedas com aro interno -->
+              <div class="kit-illustration">
+                <svg viewBox="0 0 460 210" class="kit-svg" role="img" aria-label="Kit com tabuleiro da trilha com caminho pontilhado, cartas de imprevisto e moedas do projeto com aro interno">
+                  <!-- Caixa / Prancheta do Tabuleiro (com efeito de papel e sombra) -->
+                  <g class="kit-board-group" id="kit-board">
+                    <!-- Sombra da prancheta -->
+                    <rect x="18" y="16" width="224" height="150" rx="6" fill="#ded4c3" opacity="0.6" />
+                    <!-- Base branca da prancheta -->
+                    <rect x="14" y="13" width="224" height="150" rx="6" fill="#fdfbf7" stroke="#cbbfae" stroke-width="2" />
+                    <rect x="19" y="18" width="214" height="140" rx="4" fill="none" stroke="#ebdccf" stroke-width="1.2" />
+                    
+                    <!-- Caminho pontilhado conectando as casas da Trilha -->
+                    <path class="kit-track-line" d="M 53 47 L 122 47 L 191 47 C 210 47, 210 99, 191 99 L 122 99 L 53 99" fill="none" stroke="#0f7166" stroke-width="2.6" stroke-dasharray="4,3.5" stroke-linecap="round" />
+                    
+                    <!-- Casas coloridas da Trilha (retângulos com identificação para destaque sequencial) -->
+                    <!-- Casa 1: Início -->
+                    <rect id="board-house-1" class="board-house house-1" x="28" y="28" width="50" height="38" rx="6" fill="#d5ebd9" stroke="#0f7166" stroke-width="1.8" />
+                    
+                    <!-- Casa 2 -->
+                    <rect id="board-house-2" class="board-house house-2" x="97" y="28" width="50" height="38" rx="6" fill="#fbecc5" stroke="#cfa028" stroke-width="1.8" />
+                    
+                    <!-- Casa 3 -->
+                    <rect id="board-house-3" class="board-house house-3" x="166" y="28" width="50" height="38" rx="6" fill="#f5ded2" stroke="#c66e4e" stroke-width="1.8" />
+                    
+                    <!-- Casa 4 -->
+                    <rect id="board-house-4" class="board-house house-4" x="166" y="80" width="50" height="38" rx="6" fill="#0f7166" stroke="#094e46" stroke-width="1.8" />
+                    
+                    <!-- Casa 5 -->
+                    <rect id="board-house-5" class="board-house house-5" x="97" y="80" width="50" height="38" rx="6" fill="#f4cd4e" stroke="#8d4f2b" stroke-width="1.8" />
+                    
+                    <!-- Casa 6: Chegada / Reflexão -->
+                    <rect id="board-house-6" class="board-house house-6" x="28" y="80" width="50" height="38" rx="6" fill="#ffffff" stroke="#0f7166" stroke-width="2.2" />
+
+                    <!-- Camada da Peça/Moeda que percorre a Trilha de 1 a 6 ao selecionar Vivenciar -->
+                    <g class="kit-trail-token" id="kit-trail-token" aria-hidden="true">
+                      <!-- Sombra da moeda/peça -->
+                      <circle cx="2" cy="2" r="28" class="token-shadow" fill="rgba(0, 0, 0, 0.12)" />
+                      <!-- Disco dourado -->
+                      <circle cx="0" cy="0" r="28" class="token-disc" fill="#fad85e" stroke="#8d4f2b" stroke-width="2.2" />
+                      <!-- Aro interno pontilhado -->
+                      <circle cx="0" cy="0" r="23.5" class="token-inner-ring" fill="none" stroke="#8d4f2b" stroke-width="1.2" stroke-dasharray="2,1.8" opacity="0.85" />
+                      <!-- Símbolo R$ em EB Garamond -->
+                      <text class="token-text" x="0" y="7.5" font-family="'EB Garamond', serif" font-size="20" font-weight="700" fill="#8d4f2b" text-anchor="middle">R$</text>
+                    </g>
+
+                    <!-- Camada Superior dos Números: Garante que os números e a estrela permaneçam 100% legíveis sobre a moeda -->
+                    <g class="board-numbers-layer" pointer-events="none" aria-hidden="true">
+                      <text x="53" y="52" font-family="'Inter', sans-serif" font-size="12" font-weight="800" fill="#0f7166" text-anchor="middle">1</text>
+                      <text x="122" y="52" font-family="'Inter', sans-serif" font-size="12" font-weight="800" fill="#8d4f2b" text-anchor="middle">2</text>
+                      <text x="191" y="52" font-family="'Inter', sans-serif" font-size="12" font-weight="800" fill="#8d4f2b" text-anchor="middle">3</text>
+                      <text x="191" y="104" font-family="'Inter', sans-serif" font-size="12" font-weight="800" fill="#ffffff" text-anchor="middle">4</text>
+                      <text x="122" y="104" font-family="'Inter', sans-serif" font-size="12" font-weight="800" fill="#8d4f2b" text-anchor="middle">5</text>
+                      <text x="53" y="104" font-family="'Inter', sans-serif" font-size="12" font-weight="800" fill="#0f7166" text-anchor="middle">6 ★</text>
+                    </g>
+
+                    <!-- Selo TRILHA com acabamento de papel -->
+                    <rect x="80" y="131" width="92" height="22" rx="4" fill="#eef5f1" stroke="#0f7166" stroke-width="1.2" />
+                    <text x="126" y="146.5" font-family="'Inter', sans-serif" font-size="10.5" font-weight="800" fill="#0f7166" letter-spacing="1.5px" text-anchor="middle">TRILHA</text>
+                  </g>
+
+                  <!-- Pilha de Cartas de Imprevisto com camadas de papel e palavra legível -->
+                  <g class="kit-cards-deck" id="kit-cards-deck">
+                    <!-- Carta inferior da pilha (deslocada a -9°) -->
+                    <g transform="translate(254, 18) rotate(-9)">
+                      <rect x="0" y="0" width="126" height="82" rx="5" fill="#cbe2d7" stroke="#7ea898" stroke-width="1.4" />
+                    </g>
+                    <!-- Carta intermediária da pilha (deslocada a -2°) -->
+                    <g transform="translate(260, 24) rotate(-2)">
+                      <rect x="0" y="0" width="126" height="82" rx="5" fill="#e4f4ec" stroke="#0f7166" stroke-width="1.6" />
+                    </g>
+                    <!-- Carta superior: IMPREVISTO (clicável para abrir prévia de estudo ampliada) -->
+                    <g class="kit-card-imprevisto" id="kit-card-trigger" tabindex="0" role="button" aria-haspopup="dialog" aria-expanded="false" aria-label="Carta de Imprevisto: clique ou pressione Enter para abrir prévia legível">
+                      <!-- Sombra suave da carta -->
+                      <rect x="2" y="3" width="126" height="84" rx="5" fill="rgba(0, 0, 0, 0.12)" />
+                      <!-- Corpo de papel marfim claro -->
+                      <rect x="0" y="0" width="126" height="84" rx="5" fill="#fdfbf7" stroke="#0f7166" stroke-width="2.2" />
+                      <!-- Moldura interna decorativa pontilhada -->
+                      <rect x="4" y="4" width="118" height="76" rx="3.5" fill="none" stroke="#0f7166" stroke-width="1" stroke-dasharray="3,2" opacity="0.45" />
+                      <!-- Faixa superior verde com IMPREVISTO perfeitamente legível -->
+                      <rect x="10" y="12" width="106" height="24" rx="3" fill="#e2f2ea" stroke="#0f7166" stroke-width="1.2" />
+                      <text x="63" y="28.5" font-family="'Inter', sans-serif" font-size="11.5" font-weight="900" fill="#0f7166" letter-spacing="1.5px" text-anchor="middle">IMPREVISTO</text>
+                      <!-- Linhas simuladas de texto do caso/dilema -->
+                      <line x1="16" y1="46" x2="110" y2="46" stroke="#9dbdb3" stroke-width="2" stroke-linecap="round" />
+                      <line x1="16" y1="54" x2="96" y2="54" stroke="#9dbdb3" stroke-width="2" stroke-linecap="round" />
+                      <!-- Selinho de desafio -->
+                      <rect x="16" y="63" width="38" height="11" rx="2" fill="#f4cd4e" stroke="#8d4f2b" stroke-width="0.8" />
+                      <text x="35" y="71.5" font-family="'Inter', sans-serif" font-size="7" font-weight="800" fill="#8d4f2b" text-anchor="middle">DESAFIO</text>
+                    </g>
+                  </g>
+
+                  <!-- Moeda Frontal Estática (Moeda 2 à direita com aro interno fino) -->
+                  <g class="kit-coin-static" transform="translate(348, 158)">
+                    <!-- Sombra projetada -->
+                    <circle cx="2" cy="2" r="28" fill="rgba(0, 0, 0, 0.15)" />
+                    <!-- Disco dourado frontal -->
+                    <circle cx="0" cy="0" r="28" fill="#eec447" stroke="#8d4f2b" stroke-width="2.2" />
+                    <!-- Aro interno fino pontilhado inspirado na moeda da capa -->
+                    <circle cx="0" cy="0" r="23.5" fill="none" stroke="#8d4f2b" stroke-width="1.2" stroke-dasharray="2,1.8" opacity="0.85" />
+                    <!-- Símbolo R$ em EB Garamond -->
+                    <text x="0" y="7.5" font-family="'EB Garamond', serif" font-size="20" font-weight="700" fill="#8d4f2b" text-anchor="middle">R$</text>
+                  </g>
+                </svg>
+              </div>
+
+              <!-- Lista de materiais do Kit -->
+              <footer class="kit-footer-items">
+                TEXTOS &nbsp;•&nbsp; CARTAS &nbsp;•&nbsp; CÉDULAS &nbsp;•&nbsp; TABULEIROS
+              </footer>
+            </article>
+
+            <!-- Bloco 2 (Direita): Como Aplicar (Passos 1, 2 e 3 com Linha Contínua e Seleção) -->
+            <article class="apply-card">
+              <div class="paper-layer-back" aria-hidden="true"></div>
+              <div class="apply-top-bar" aria-hidden="true"></div>
+              
+              <header class="apply-header">
+                <span class="apply-tag">COMO APLICAR?</span>
+              </header>
+
+              <!-- Lista de passos conectados por linha vertical contínua atrás dos círculos -->
+              <div class="apply-steps-list" role="group" aria-label="Etapas de aplicação nas escolas">
+                
+                <!-- Linha vertical contínua posicionada atrás dos círculos numerados -->
+                <div class="apply-timeline-line" aria-hidden="true">
+                  <div class="apply-timeline-progress"></div>
+                </div>
+
+                <!-- Passo 1: Preparar -->
+                <div class="apply-step-item step-item-1" data-step="1" tabindex="0" role="button" aria-pressed="false" aria-label="Etapa 1: Preparar. Clique ou pressione Enter para selecionar.">
+                  <div class="step-circle step-num-brown">1</div>
+                  <div class="step-content">
+                    <h3 class="step-title">Preparar</h3>
+                    <p class="step-desc">Organizar materiais e planejar os encontros.</p>
+                  </div>
+                </div>
+
+                <!-- Passo 2: Vivenciar -->
+                <div class="apply-step-item step-item-2" data-step="2" tabindex="0" role="button" aria-pressed="false" aria-label="Etapa 2: Vivenciar. Clique ou pressione Enter para selecionar.">
+                  <div class="step-circle step-num-teal">2</div>
+                  <div class="step-content">
+                    <h3 class="step-title">Vivenciar</h3>
+                    <p class="step-desc">Conduzir debates, casos e a Trilha em grupos.</p>
+                  </div>
+                </div>
+
+                <!-- Passo 3: Avaliar -->
+                <div class="apply-step-item step-item-3" data-step="3" tabindex="0" role="button" aria-pressed="false" aria-label="Etapa 3: Avaliar. Clique ou pressione Enter para selecionar.">
+                  <div class="step-circle step-num-gold">3</div>
+                  <div class="step-content">
+                    <h3 class="step-title">Avaliar</h3>
+                    <p class="step-desc">Retomar a nuvem inicial e aplicar a ficha final.</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+          </div>
+
+          <!-- Banner de Fechamento: Proposta para a Extensão (clicável para destacar no momento da fala) -->
+          <footer class="extension-banner" id="extension-banner" tabindex="0" role="button" aria-pressed="false" aria-label="Proposta para a extensão: clique ou pressione Enter para destacar a frase no momento da fala">
+            <div class="extension-gold-bar" aria-hidden="true"></div>
+            <div class="extension-banner-body">
+              <div class="extension-banner-title">PROPOSTA PARA A EXTENSÃO</div>
+              <p class="extension-banner-text">
+                Adaptar exemplos e recursos <span class="phrase-highlight-target">ao contexto dos estudantes</span>, preservando a metodologia original.
+              </p>
+            </div>
+          </footer>
+
+          <!-- Modal / Camada de Movimento Própria: Prévia Legível da Carta de Imprevisto -->
+          <div id="card-preview-overlay" class="card-preview-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="preview-card-title">
+            <div class="card-preview-backdrop"></div>
+            <div class="card-preview-sheet" tabindex="0">
+              <button id="card-preview-close" class="card-preview-close" type="button" aria-label="Fechar prévia da carta (Esc)">×</button>
+              <div class="card-preview-header">
+                <span class="preview-tag">ANEXOS DO PROJETO 8.9 &nbsp;•&nbsp; CASO REAL</span>
+                <span class="preview-badge-danger">IMPREVISTO</span>
+              </div>
+              <h3 id="preview-card-title" class="preview-card-heading">Despesa Inesperada na Família</h3>
+              <div class="preview-scenario-box">
+                <p class="preview-scenario-text">
+                  <strong>Situação:</strong> O refrigerador da casa queimou subitamente e o conserto urgente custa <strong>R$ 350,00</strong> à vista.
+                </p>
+                <p class="preview-dilemma-text">
+                  Como a família deve resolver o imprevisto sem comprometer as contas básicas do mês?
+                </p>
+              </div>
+              <div class="preview-options-list">
+                <div class="preview-option-item">
+                  <span class="opt-letter">A</span>
+                  <span class="opt-desc"><strong>Pagamento à vista com reserva:</strong> Usa a poupança guardada e economiza nas compras supérfluas das semanas seguintes.</span>
+                </div>
+                <div class="preview-option-item">
+                  <span class="opt-letter">B</span>
+                  <span class="opt-desc"><strong>Parcelar no cartão em 4×:</strong> Paga 4 parcelas de R$ 105,00 (total R$ 420,00). As parcelas cabem no mês, mas geram juros e endividamento.</span>
+                </div>
+                <div class="preview-option-item">
+                  <span class="opt-letter">C</span>
+                  <span class="opt-desc"><strong>Empréstimo rápido / Cheque especial:</strong> Cobre o valor imediato pagando juros elevados no vencimento, com alto risco de inadimplência.</span>
+                </div>
+              </div>
+              <footer class="preview-card-footer">
+                <span class="preview-footer-note">AULA 05–06 &nbsp;•&nbsp; TRILHA DO ENDIVIDAMENTO &nbsp;•&nbsp; CLIQUE PARA FECHAR</span>
+              </footer>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Rodapé do Slide 4 -->
+        <footer class="slide-footer slide4-footer">
+          <span class="footer-left-tag">04 &nbsp;/&nbsp; APLICAÇÃO NAS ESCOLAS</span>
+          <span class="footer-right-tag">HISTÓRIA &nbsp;·&nbsp; EDUCAÇÃO FINANCEIRA</span>
+        </footer>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Barra de Controles Discretos de Navegação -->
+  <nav class="nav-toolbar" aria-label="Controles de navegação dos slides">
+    <button id="btn-prev" class="nav-btn" type="button" aria-label="Voltar para a tela anterior" title="Tela anterior (Seta esquerda)">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+        <path d="M15 19l-7-7 7-7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>Anterior</span>
+    </button>
+
+    <div class="slide-counter" aria-live="polite" aria-atomic="true">
+      <span id="counter-current">1</span>
+      <span class="counter-sep">/</span>
+      <span id="counter-total">4</span>
+    </div>
+
+    <button id="btn-next" class="nav-btn" type="button" aria-label="Avançar para a próxima tela" title="Próxima tela (Seta direita)">
+      <span>Próximo</span>
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+        <path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+
+    <button id="btn-motion" class="nav-btn" type="button" aria-label="Alternar modo de animação" title="Alternar modo de animação (Normal / Reduzido)">
+      <span id="motion-label">✦ Normal</span>
+    </button>
+
+    <button id="btn-fullscreen" class="nav-btn nav-btn-icon" type="button" aria-label="Alternar tela cheia" title="Tela cheia (F11)">
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+        <path d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </nav>
+
+  <script src="script.js"></script>
+</body>
+</html>
